@@ -4,7 +4,6 @@ __all__ = ['get_chart', 'get_charts', 'get_data']
 
 # Cell
 #export
-from nbdev.showdoc import *
 import asks
 import trio
 import pandas as pd
