@@ -60,5 +60,5 @@ sidebars:
 - home_sidebar
 permalink: pretty
 
-theme: jekyll-theme-leap-day
+theme: jekyll-theme-cayman
 baseurl: /netdata-pandas/
