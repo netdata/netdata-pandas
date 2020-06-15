@@ -2,7 +2,7 @@ topnav:
 - title: Topnav
   items:
     - title: github
-      external_url: https://github.com/andrewm4894/netdata-pandas/tree/master/
+      external_url: https://github.com/netdata/netdata-pandas/tree/master/
 
 #Topnav dropdowns
 topnav_dropdowns:
