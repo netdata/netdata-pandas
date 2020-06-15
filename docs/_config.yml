@@ -1,4 +1,4 @@
-repository: andrewm4894/netdata-pandas
+repository: netdata/netdata-pandas
 output: web
 topnav_title: netdata-pandas
 site_title: netdata-pandas
