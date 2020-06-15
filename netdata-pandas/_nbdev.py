@@ -6,8 +6,8 @@ index = {"get_data": "00_data.ipynb"}
 
 modules = ["data.py"]
 
-doc_url = "https://netdata.github.io/netdata_pandas/"
+doc_url = "https://netdata.github.io/netdata-pandas/"
 
-git_url = "https://github.com/netdata/netdata_pandas/tree/master/"
+git_url = "https://github.com/netdata/netdata-pandas/tree/master/"
 
 def custom_doc_links(name): return None
