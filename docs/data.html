@@ -45,7 +45,78 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>, <strong><code>data</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
+<h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+</blockquote>
+<p>Get list of all available charts.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tests</span>
+
+<span class="c1"># get some charts from london demo site</span>
+<span class="n">charts</span> <span class="o">=</span> <span class="n">get_chart_list</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="n">starts_with</span><span class="o">=</span><span class="s1">&#39;system.&#39;</span><span class="p">)</span>
+
+<span class="c1"># check just system. charts returned</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">([</span><span class="n">chart</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">chart</span> <span class="ow">in</span> <span class="n">charts</span><span class="p">])</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;system&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>, <strong><code>data</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
 </blockquote>
 <p>Get data for an individual chart.</p>
 
@@ -70,7 +141,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
 
@@ -95,7 +166,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'london.my-netdata.io'</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L53" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'london.my-netdata.io'</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 
@@ -133,7 +204,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(60, 12)
+<pre>(61, 12)
 </pre>
 </div>
 </div>
@@ -191,78 +262,78 @@ description: "Read data from netdata rest api into a pandas dataframe."
   </thead>
   <tbody>
     <tr>
-      <th>1592257009</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0</td>
-      <td>0.503778</td>
-      <td>0.251889</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1592257010</th>
-      <td>0.0</td>
+      <th>1592258620</th>
       <td>0.01</td>
+      <td>0.02</td>
       <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.250627</td>
-      <td>0</td>
-      <td>0.250627</td>
-      <td>1.253133</td>
-      <td>0</td>
-      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1592257011</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>0</td>
+      <th>1592258621</th>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>0</td>
-      <td>0.751880</td>
+      <td>0.0</td>
       <td>0.501253</td>
-      <td>0</td>
+      <td>0.751880</td>
+      <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>1592257012</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>0</td>
+      <th>1592258622</th>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>1.005025</td>
+      <td>0.753769</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1592258623</th>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.250627</td>
+      <td>0.0</td>
+      <td>0.501253</td>
+      <td>0.501253</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1592258624</th>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.251256</td>
-      <td>0</td>
       <td>0.753769</td>
-      <td>0.502513</td>
-      <td>0</td>
       <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1592257013</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0</td>
-      <td>0.502513</td>
-      <td>0.502513</td>
-      <td>0</td>
       <td>0.0</td>
     </tr>
   </tbody>
@@ -287,10 +358,11 @@ description: "Read data from netdata rest api into a pandas dataframe."
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tests</span>
 
+<span class="c1"># get some test data</span>
 <span class="n">test_host</span> <span class="o">=</span> <span class="s1">&#39;london.my-netdata.io&#39;</span>
 <span class="n">test_charts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span> <span class="s1">&#39;system.load&#39;</span><span class="p">]</span>
-
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+
 <span class="c1"># look for some expected columns</span>
 <span class="k">assert</span> <span class="s1">&#39;system.load|load1&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
 <span class="k">assert</span> <span class="s1">&#39;system.cpu|user&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>

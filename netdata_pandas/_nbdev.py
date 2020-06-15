@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"get_chart": "00_data.ipynb",
+index = {"get_chart_list": "00_data.ipynb",
+         "get_chart": "00_data.ipynb",
          "get_charts": "00_data.ipynb",
          "get_data": "00_data.ipynb",
          "do_stuff": "01_utils.ipynb"}
