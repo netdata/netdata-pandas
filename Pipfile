@@ -7,6 +7,7 @@ verify_ssl = true
 jupyter = "==1.0.0"
 nbdev = "==0.2.18"
 jupyterlab = "==2.1.4"
+twine = "==3.1.1"
 
 [packages]
 pandas = "==1.0.4"
