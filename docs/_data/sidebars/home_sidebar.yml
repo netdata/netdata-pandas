@@ -13,6 +13,6 @@ entries:
       title: data
       url: /data
     output: web
-    title: netdata-pandas
+    title: netdata_pandas
   output: web
   title: Sidebar
