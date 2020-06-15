@@ -2,9 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"get_data": "00_data.ipynb"}
+index = {"get_data": "00_data.ipynb",
+         "do_stuff": "01_utils.ipynb"}
 
-modules = ["data.py"]
+modules = ["data.py",
+           "utils.py"]
 
 doc_url = "https://netdata.github.io/netdata-pandas/"
 

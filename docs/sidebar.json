@@ -1,6 +1,7 @@
 {
   "netdata_pandas": {
     "Overview": "/",
-    "data": "/data"
+    "data": "/data",
+    "utils": "/utils"
   }
 }
