@@ -15,11 +15,11 @@ import requests
 def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> list:
     """Get list of all available charts.
 
-    ### params
+    ##### parameters
     - _host_ `str` The host we want to get a list of available charts from.
     - _starts\_with_ `str` A string to filter the list of charts returns to just those that start with `starts_with`.
 
-    ### returns
+    ##### returns
     chart_list: `list`: A list of availalbe charts.
 
     """
