@@ -115,7 +115,7 @@ description: "Some helper functions to '<a href='https://en.wikipedia.org/wiki/D
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="drop_low_std_cols" class="doc_header"><code>drop_low_std_cols</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/wrangle.py#L33" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>drop_low_std_cols</code>(<strong><code>df</code></strong>, <strong><code>std_thold</code></strong>=<em><code>0.05</code></em>)</p>
+<h4 id="drop_low_std_cols" class="doc_header"><code>drop_low_std_cols</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/wrangle.py#L33" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>drop_low_std_cols</code>(<strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>std_thold</code></strong>=<em><code>0.05</code></em>)</p>
 </blockquote>
 <p>Drop columns with a low standard deviation value.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -153,6 +153,7 @@ description: "Some helper functions to '<a href='https://en.wikipedia.org/wiki/D
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">20000</span><span class="p">,</span><span class="mi">30000</span><span class="p">,</span><span class="mi">400</span><span class="p">],</span>
     <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">200000</span><span class="p">,</span><span class="mi">300000</span><span class="p">,</span><span class="mi">400</span><span class="p">],</span>
 <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;col0&#39;</span><span class="p">,</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span><span class="s1">&#39;col2&#39;</span><span class="p">,</span><span class="s1">&#39;col3&#39;</span><span class="p">])</span>
+
 <span class="c1"># check that col0 is removed as it only has 2 unique values and a low std value (0.040825)</span>
 <span class="k">assert</span> <span class="s1">&#39;col0&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drop_low_std_cols</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">std_thold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>

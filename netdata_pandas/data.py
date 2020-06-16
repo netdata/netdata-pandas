@@ -57,7 +57,7 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|'):
 # Cell
 
 
-async def get_charts(api_calls, col_sep='|', timeout: int = 60):
+async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> pd.DataFrame:
     """Create a nursey to make seperate async calls to get each chart.
 
     ##### Parameters:

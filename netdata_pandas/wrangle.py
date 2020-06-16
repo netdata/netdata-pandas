@@ -9,7 +9,7 @@ import pandas as pd
 # Cell
 
 
-def drop_low_uniqueness_cols(df: pd.DataFrame, nunique_thold=0.05):
+def drop_low_uniqueness_cols(df: pd.DataFrame, nunique_thold=0.05) -> pd.DataFrame:
     """Drop columns with a low number of unique values.
 
     ##### Parameters:
@@ -30,7 +30,7 @@ def drop_low_uniqueness_cols(df: pd.DataFrame, nunique_thold=0.05):
 # Cell
 
 
-def drop_low_std_cols(df, std_thold=0.05):
+def drop_low_std_cols(df: pd.DataFrame, std_thold=0.05) -> pd.DataFrame:
     """Drop columns with a low standard deviation value.
 
     ##### Parameters:
