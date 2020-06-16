@@ -14,6 +14,19 @@ import requests
 
 def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> list:
     """Get list of all available charts.
+
+    Parameters
+    ----------
+    host : str
+        The host we want to get a list of available charts from.
+    y
+        Description of parameter `y` (with type not specified)
+
+    Returns
+    -------
+    chart_list : list
+        A list of availalbe charts.
+
     """
     url = f"http://{host}/api/v1/charts"
     r = requests.get(url)
