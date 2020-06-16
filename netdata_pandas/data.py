@@ -15,7 +15,7 @@ import requests
 def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> list:
     """Get list of all available charts.
 
-    `host`: `str`: The host we want to get a list of available charts from.
+    _host_ `str`: The host we want to get a list of available charts from.
     `starts_with`: `str`: A string to filter the list of charts returns to just those that start with `starts_with`.
 
     chart_list: `list`: A list of availalbe charts.
