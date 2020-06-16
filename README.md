@@ -18,140 +18,45 @@ from netdata_pandas.data import get_data
 
 df = get_data('london.my-netdata.io', ['system.cpu','system.load'], after=-60, before=0)
 print(df.shape)
-df.head()
+print(df.head())
 ```
 
-    (61, 12)
+    (60, 12)
+                system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
+    time_idx                                                                
+    1592303824                      0                 0          0.250627   
+    1592303825                      0                 0          0.000000   
+    1592303826                      0                 0          0.000000   
+    1592303827                      0                 0          0.000000   
+    1592303828                      0                 0          0.000000   
+    
+                system.cpu|softirq  system.cpu|irq  system.cpu|user  \
+    time_idx                                                          
+    1592303824            0.250627               0         0.501253   
+    1592303825            0.000000               0         1.250000   
+    1592303826            0.000000               0         0.502513   
+    1592303827            0.000000               0         1.005025   
+    1592303828            0.000000               0         1.002506   
+    
+                system.cpu|system  system.cpu|nice  system.cpu|iowait  \
+    time_idx                                                            
+    1592303824           0.501253                0                0.0   
+    1592303825           0.500000                0                0.0   
+    1592303826           0.502513                0                0.0   
+    1592303827           1.005025                0                0.0   
+    1592303828           0.250627                0                0.0   
+    
+                system.load|load1  system.load|load5  system.load|load15  
+    time_idx                                                              
+    1592303824                NaN                NaN                 NaN  
+    1592303825                0.0               0.02                 0.0  
+    1592303826                0.0               0.02                 0.0  
+    1592303827                0.0               0.02                 0.0  
+    1592303828                0.0               0.02                 0.0  
 
 
+## Examples
 
+You can find some more examples in the [examples](https://github.com/netdata/netdata-pandas/tree/master/examples) folder. 
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>system.cpu|guest_nice</th>
-      <th>system.cpu|guest</th>
-      <th>system.cpu|steal</th>
-      <th>system.cpu|softirq</th>
-      <th>system.cpu|irq</th>
-      <th>system.cpu|user</th>
-      <th>system.cpu|system</th>
-      <th>system.cpu|nice</th>
-      <th>system.cpu|iowait</th>
-      <th>system.load|load1</th>
-      <th>system.load|load5</th>
-      <th>system.load|load15</th>
-    </tr>
-    <tr>
-      <th>time_idx</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1592257125</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1592257129</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.501253</td>
-      <td>0.751880</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592257130</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.501253</td>
-      <td>0.751880</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1592257131</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.249377</td>
-      <td>0.0</td>
-      <td>0.997506</td>
-      <td>0.498753</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592257132</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.503778</td>
-      <td>0.755668</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
+Or if you just want to play with it right now you can use [this Google Colab notebook](https://colab.research.google.com/drive/1SGF3Ij1r8gNJOwdk-3cVhCvyUGwGiTnc?usp=sharing) to quickly get started.

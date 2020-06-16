@@ -72,7 +72,7 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span><span class="s1">&#39;system.load&#39;</span><span class="p">],</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -85,143 +85,40 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(61, 12)
+<pre>(60, 12)
+            system.load|load1  system.load|load5  system.load|load15  \
+time_idx                                                               
+1592304162                NaN                NaN                 NaN   
+1592304163                NaN                NaN                 NaN   
+1592304164                NaN                NaN                 NaN   
+1592304165                0.0               0.05                0.02   
+1592304166                0.0               0.05                0.02   
+
+            system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
+time_idx                                                                
+1592304162                      0                 0               0.0   
+1592304163                      0                 0               0.0   
+1592304164                      0                 0               0.0   
+1592304165                      0                 0               0.0   
+1592304166                      0                 0               0.0   
+
+            system.cpu|softirq  system.cpu|irq  system.cpu|user  \
+time_idx                                                          
+1592304162            0.000000               0         1.000000   
+1592304163            0.250000               0         0.750000   
+1592304164            0.498753               0         1.246883   
+1592304165            0.000000               0         0.753769   
+1592304166            0.000000               0         0.250627   
+
+            system.cpu|system  system.cpu|nice  system.cpu|iowait  
+time_idx                                                           
+1592304162           1.000000                0                0.0  
+1592304163           0.750000                0                0.0  
+1592304164           0.748130                0                0.0  
+1592304165           0.502513                0                0.0  
+1592304166           1.002506                0                0.0  
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>system.cpu|guest_nice</th>
-      <th>system.cpu|guest</th>
-      <th>system.cpu|steal</th>
-      <th>system.cpu|softirq</th>
-      <th>system.cpu|irq</th>
-      <th>system.cpu|user</th>
-      <th>system.cpu|system</th>
-      <th>system.cpu|nice</th>
-      <th>system.cpu|iowait</th>
-      <th>system.load|load1</th>
-      <th>system.load|load5</th>
-      <th>system.load|load15</th>
-    </tr>
-    <tr>
-      <th>time_idx</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1592257725</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.05</td>
-      <td>0.06</td>
-      <td>0.02</td>
-    </tr>
-    <tr>
-      <th>1592257727</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.250627</td>
-      <td>0.250627</td>
-      <td>0.0</td>
-      <td>1.503759</td>
-      <td>0.751880</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592257728</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.501253</td>
-      <td>0.751880</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592257729</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.751880</td>
-      <td>0.751880</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592257730</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.251256</td>
-      <td>0.0</td>
-      <td>0.753769</td>
-      <td>1.005025</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.04</td>
-      <td>0.06</td>
-      <td>0.02</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
 </div>
 
 </div>
@@ -230,6 +127,20 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can find some more examples in the <a href="https://github.com/netdata/netdata-pandas/tree/master/examples">examples</a> folder.</p>
+<p>Or if you just want to play with it right now you can use <a href="https://colab.research.google.com/drive/1SGF3Ij1r8gNJOwdk-3cVhCvyUGwGiTnc?usp=sharing">this Google Colab notebook</a> to quickly get started.</p>
+
+</div>
+</div>
+</div>
 </div>
  
 
