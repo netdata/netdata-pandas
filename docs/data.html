@@ -48,8 +48,10 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Get list of all available charts.</p>
-<p><em>host</em> <code>str</code>: The host we want to get a list of available charts from.
-<code>starts_with</code>: <code>str</code>: A string to filter the list of charts returns to just those that start with <code>starts_with</code>.</p>
+<ul>
+<li><em>host</em> <code>str</code> The host we want to get a list of available charts from.</li>
+<li>_starts<em>with</em> <code>str</code> A string to filter the list of charts returns to just those that start with <code>starts_with</code>.</li>
+</ul>
 <p>chart_list: <code>list</code>: A list of availalbe charts.</p>
 
 </div>
