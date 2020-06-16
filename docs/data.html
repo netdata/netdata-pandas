@@ -107,7 +107,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>)</p>
+<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>)</p>
 </blockquote>
 <p>Get data for an individual chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -144,7 +144,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L58" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L59" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -184,7 +184,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L81" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L83" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -224,7 +224,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -237,207 +237,98 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(67, 2091)
+<pre>(66, 2091)
+            users.pwrites|ulog  users.pwrites|messagebus  users.pwrites|unscd  \
+time_idx                                                                        
+1592304475                 0.0                       0.0                  0.0   
+1592304476                 0.0                       0.0                  0.0   
+1592304477                 0.0                       0.0                  0.0   
+1592304478                 0.0                       0.0                  0.0   
+1592304479                 0.0                       0.0                  0.0   
+
+            users.pwrites|bind  users.pwrites|nobody  users.pwrites|ntp  \
+time_idx                                                                  
+1592304475                 0.0                   0.0                0.0   
+1592304476                 0.0                   0.0                0.0   
+1592304477                 0.0                   0.0                0.0   
+1592304478                 0.0                   0.0                0.0   
+1592304479                 0.0                   0.0                0.0   
+
+            users.pwrites|postfix  users.pwrites|mysql  \
+time_idx                                                 
+1592304475                    0.0                  0.0   
+1592304476                    0.0                  0.0   
+1592304477                    0.0                  0.0   
+1592304478                    0.0                  0.0   
+1592304479                    0.0                  0.0   
+
+            users.pwrites|www-data  users.pwrites|netdata  ...  \
+time_idx                                                   ...   
+1592304475                3.999964               3.999964  ...   
+1592304476                0.000000               3.999968  ...   
+1592304477                3.999964               3.999964  ...   
+1592304478                3.999964               3.999964  ...   
+1592304479                0.000000               3.984028  ...   
+
+            mysql_local.connections|aborted mysql_local.qcache_ops|hits  \
+time_idx                                                                  
+1592304475                              NaN                         NaN   
+1592304476                              NaN                         NaN   
+1592304477                              NaN                         NaN   
+1592304478                              NaN                         NaN   
+1592304479                              NaN                         NaN   
+
+           mysql_local.qcache_ops|lowmem prunes  \
+time_idx                                          
+1592304475                                  NaN   
+1592304476                                  NaN   
+1592304477                                  NaN   
+1592304478                                  NaN   
+1592304479                                  NaN   
+
+            mysql_local.qcache_ops|inserts  mysql_local.qcache_ops|not cached  \
+time_idx                                                                        
+1592304475                             NaN                                NaN   
+1592304476                             NaN                                NaN   
+1592304477                             NaN                                NaN   
+1592304478                             NaN                                NaN   
+1592304479                             NaN                                NaN   
+
+            mysql_local.innodb_os_log_fsync_writes|fsyncs  \
+time_idx                                                    
+1592304475                                            NaN   
+1592304476                                            NaN   
+1592304477                                            NaN   
+1592304478                                            NaN   
+1592304479                                            NaN   
+
+            mysql_local.galera_cluster_status|status  \
+time_idx                                               
+1592304475                                       NaN   
+1592304476                                       NaN   
+1592304477                                       NaN   
+1592304478                                       NaN   
+1592304479                                       NaN   
+
+            web_log_nginx.response_time|min  web_log_nginx.response_time|max  \
+time_idx                                                                       
+1592304475                              NaN                              NaN   
+1592304476                              NaN                              NaN   
+1592304477                              NaN                              NaN   
+1592304478                              NaN                              NaN   
+1592304479                              NaN                              NaN   
+
+            web_log_nginx.response_time|avg  
+time_idx                                     
+1592304475                              NaN  
+1592304476                              NaN  
+1592304477                              NaN  
+1592304478                              NaN  
+1592304479                              NaN  
+
+[5 rows x 2091 columns]
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>groups.lwrites|ulog</th>
-      <th>groups.lwrites|messagebus</th>
-      <th>groups.lwrites|unscd</th>
-      <th>groups.lwrites|bind</th>
-      <th>groups.lwrites|nogroup</th>
-      <th>groups.lwrites|ntp</th>
-      <th>groups.lwrites|postfix</th>
-      <th>groups.lwrites|mysql</th>
-      <th>groups.lwrites|www-data</th>
-      <th>groups.lwrites|netdata</th>
-      <th>...</th>
-      <th>cpu.cpu0_softnet_stat|received_rps</th>
-      <th>cpu.cpu0_softnet_stat|flow_limit_count</th>
-      <th>ipv6.icmpneighbor|InSolicits</th>
-      <th>ipv6.icmpneighbor|OutSolicits</th>
-      <th>ipv6.icmpneighbor|InAdvertisements</th>
-      <th>ipv6.icmpneighbor|OutAdvertisements</th>
-      <th>netfilter.synproxy_entries|entries</th>
-      <th>mysql_local.sort_issues|merge_passes</th>
-      <th>mysql_local.sort_issues|range</th>
-      <th>mysql_local.sort_issues|scan</th>
-    </tr>
-    <tr>
-      <th>time_idx</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1592302970</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592302973</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592302974</th>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>22.24441</td>
-      <td>34.15204</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592302975</th>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>42.27810</td>
-      <td>30.32549</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1592302976</th>
-      <td>0.253904</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>18.75438</td>
-      <td>35.44889</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 2091 columns</p>
-</div>
-</div>
-
 </div>
 
 </div>

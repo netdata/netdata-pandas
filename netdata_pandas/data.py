@@ -21,6 +21,7 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> li
 
     ##### Returns:
     - **chart_list** `list` A list of availalbe charts.
+
     """
 
     url = f"http://{host}/api/v1/charts"
@@ -65,6 +66,7 @@ async def get_charts(api_calls, col_sep='|', timeout: int = 60):
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index.
+
     """
 
     data = []
@@ -97,6 +99,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
+
     """
 
     # if hosts is a string make it a list of one
