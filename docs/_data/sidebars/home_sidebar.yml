@@ -13,8 +13,8 @@ entries:
       title: data
       url: /data
     - output: web,pdf
-      title: utils
-      url: /utils
+      title: wrangle
+      url: /wrangle
     output: web
     title: netdata_pandas
   output: web

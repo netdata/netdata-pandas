@@ -45,7 +45,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+<h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Get list of all available charts on a <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -107,7 +107,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>)</p>
+<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>)</p>
 </blockquote>
 <p>Get data for an individual chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -144,7 +144,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L59" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -184,7 +184,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L83" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -222,7 +222,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># examples</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nunique_thold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
@@ -237,96 +237,80 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(66, 2091)
-            users.pwrites|ulog  users.pwrites|messagebus  users.pwrites|unscd  \
+<pre>(65, 567)
+            web_log_nginx.bandwidth|received  web_log_nginx.bandwidth|sent  \
+time_idx                                                                     
+1592308030                               NaN                           NaN   
+1592308031                          17.16904                     -4.622228   
+1592308032                          18.41799                    -23.055690   
+1592308033                          32.75031                    -20.399680   
+1592308034                          46.99821                   -129.091830   
+
+            system.idlejitter|min  system.idlejitter|max  \
+time_idx                                                   
+1592308030                    NaN                    NaN   
+1592308031                    NaN                    NaN   
+1592308032                   28.0                  107.0   
+1592308033                   22.0                  107.0   
+1592308034                   27.0                  114.0   
+
+            system.idlejitter|average  web_log_nginx.response_time|max  \
+time_idx                                                                 
+1592308030                        NaN                              NaN   
+1592308031                        NaN                         0.580976   
+1592308032                       69.0                         0.999977   
+1592308033                       72.0                         0.999487   
+1592308034                       70.0                         2.160623   
+
+            web_log_nginx.response_time|avg  nginx_local.connections|active  \
+time_idx                                                                      
+1592308030                              NaN                             NaN   
+1592308031                         0.387511                           167.0   
+1592308032                         0.569965                           167.0   
+1592308033                         0.338381                           169.0   
+1592308034                         1.036218                           167.0   
+
+            nginx_local.connection_status|idle  nginx_local.requests|requests  \
 time_idx                                                                        
-1592304475                 0.0                       0.0                  0.0   
-1592304476                 0.0                       0.0                  0.0   
-1592304477                 0.0                       0.0                  0.0   
-1592304478                 0.0                       0.0                  0.0   
-1592304479                 0.0                       0.0                  0.0   
+1592308030                                 NaN                            NaN   
+1592308031                               166.0                       3.319424   
+1592308032                               166.0                       3.839579   
+1592308033                               168.0                       5.899705   
+1592308034                               166.0                       8.580716   
 
-            users.pwrites|bind  users.pwrites|nobody  users.pwrites|ntp  \
-time_idx                                                                  
-1592304475                 0.0                   0.0                0.0   
-1592304476                 0.0                   0.0                0.0   
-1592304477                 0.0                   0.0                0.0   
-1592304478                 0.0                   0.0                0.0   
-1592304479                 0.0                   0.0                0.0   
+            ...  groups.uptime|messagebus  groups.uptime|unscd  \
+time_idx    ...                                                  
+1592308030  ...                       NaN                  NaN   
+1592308031  ...                       NaN                  NaN   
+1592308032  ...                       NaN                  NaN   
+1592308033  ...                       NaN                  NaN   
+1592308034  ...                       NaN                  NaN   
 
-            users.pwrites|postfix  users.pwrites|mysql  \
+            groups.uptime|bind  groups.uptime|nogroup  groups.uptime|ntp  \
+time_idx                                                                   
+1592308030                 NaN                    NaN                NaN   
+1592308031                 NaN                    NaN                NaN   
+1592308032                 NaN                    NaN                NaN   
+1592308033                 NaN                    NaN                NaN   
+1592308034                 NaN                    NaN                NaN   
+
+            groups.uptime|postfix  groups.uptime|mysql  \
 time_idx                                                 
-1592304475                    0.0                  0.0   
-1592304476                    0.0                  0.0   
-1592304477                    0.0                  0.0   
-1592304478                    0.0                  0.0   
-1592304479                    0.0                  0.0   
+1592308030                    NaN                  NaN   
+1592308031                    NaN                  NaN   
+1592308032                    NaN                  NaN   
+1592308033                    NaN                  NaN   
+1592308034                    NaN                  NaN   
 
-            users.pwrites|www-data  users.pwrites|netdata  ...  \
-time_idx                                                   ...   
-1592304475                3.999964               3.999964  ...   
-1592304476                0.000000               3.999968  ...   
-1592304477                3.999964               3.999964  ...   
-1592304478                3.999964               3.999964  ...   
-1592304479                0.000000               3.984028  ...   
-
-            mysql_local.connections|aborted mysql_local.qcache_ops|hits  \
-time_idx                                                                  
-1592304475                              NaN                         NaN   
-1592304476                              NaN                         NaN   
-1592304477                              NaN                         NaN   
-1592304478                              NaN                         NaN   
-1592304479                              NaN                         NaN   
-
-           mysql_local.qcache_ops|lowmem prunes  \
-time_idx                                          
-1592304475                                  NaN   
-1592304476                                  NaN   
-1592304477                                  NaN   
-1592304478                                  NaN   
-1592304479                                  NaN   
-
-            mysql_local.qcache_ops|inserts  mysql_local.qcache_ops|not cached  \
-time_idx                                                                        
-1592304475                             NaN                                NaN   
-1592304476                             NaN                                NaN   
-1592304477                             NaN                                NaN   
-1592304478                             NaN                                NaN   
-1592304479                             NaN                                NaN   
-
-            mysql_local.innodb_os_log_fsync_writes|fsyncs  \
-time_idx                                                    
-1592304475                                            NaN   
-1592304476                                            NaN   
-1592304477                                            NaN   
-1592304478                                            NaN   
-1592304479                                            NaN   
-
-            mysql_local.galera_cluster_status|status  \
-time_idx                                               
-1592304475                                       NaN   
-1592304476                                       NaN   
-1592304477                                       NaN   
-1592304478                                       NaN   
-1592304479                                       NaN   
-
-            web_log_nginx.response_time|min  web_log_nginx.response_time|max  \
+            groups.uptime|www-data  groups.uptime|netdata  groups.uptime|root  
 time_idx                                                                       
-1592304475                              NaN                              NaN   
-1592304476                              NaN                              NaN   
-1592304477                              NaN                              NaN   
-1592304478                              NaN                              NaN   
-1592304479                              NaN                              NaN   
+1592308030                     NaN                    NaN                 NaN  
+1592308031                     NaN                    NaN                 NaN  
+1592308032                     NaN                    NaN                 NaN  
+1592308033                     NaN                    NaN                 NaN  
+1592308034                     NaN                    NaN                 NaN  
 
-            web_log_nginx.response_time|avg  
-time_idx                                     
-1592304475                              NaN  
-1592304476                              NaN  
-1592304477                              NaN  
-1592304478                              NaN  
-1592304479                              NaN  
-
-[5 rows x 2091 columns]
+[5 rows x 567 columns]
 </pre>
 </div>
 </div>

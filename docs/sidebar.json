@@ -2,6 +2,6 @@
   "netdata_pandas": {
     "Overview": "/",
     "data": "/data",
-    "utils": "/utils"
+    "wrangle": "/wrangle"
   }
 }

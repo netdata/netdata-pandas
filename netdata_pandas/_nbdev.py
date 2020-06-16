@@ -6,10 +6,11 @@ index = {"get_chart_list": "00_data.ipynb",
          "get_chart": "00_data.ipynb",
          "get_charts": "00_data.ipynb",
          "get_data": "00_data.ipynb",
-         "do_stuff": "01_utils.ipynb"}
+         "drop_low_uniqueness_cols": "01_wrangle.ipynb",
+         "drop_low_std_cols": "01_wrangle.ipynb"}
 
 modules = ["data.py",
-           "utils.py"]
+           "wrangle.py"]
 
 doc_url = "https://netdata.github.io/netdata-pandas/"
 

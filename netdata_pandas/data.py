@@ -8,6 +8,7 @@ import asks
 import trio
 import pandas as pd
 import requests
+from .wrangle import drop_low_uniqueness_cols, drop_low_std_cols
 
 # Cell
 
@@ -82,7 +83,8 @@ async def get_charts(api_calls, col_sep='|', timeout: int = 60):
 
 def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
-             ffill: bool = True, diff: bool = False, timeout: int = 60) -> pd.DataFrame:
+             ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
+             std_thold: float = None) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -126,4 +128,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         df = df.ffill()
     if diff:
         df = df.diff().dropna(how='all')
+    if nunique_thold:
+        df = drop_low_uniqueness_cols(df, nunique_thold)
+    if std_thold:
+        df = drop_low_std_cols(df, std_thold)
     return df
