@@ -9,6 +9,10 @@
 
 `pip install netdata-pandas`
 
+## Documentation
+
+More detailed documentation can be found at https://netdata.github.io/netdata-pandas
+
 ## Quickstart
 
 Get some data into a pandas dataframe.

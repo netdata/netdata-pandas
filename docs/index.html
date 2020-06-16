@@ -50,6 +50,19 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Documentation">Documentation<a class="anchor-link" href="#Documentation"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>More detailed documentation can be found at <a href="https://netdata.github.io/netdata-pandas">https://netdata.github.io/netdata-pandas</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Quickstart">Quickstart<a class="anchor-link" href="#Quickstart"> </a></h2>
 </div>
 </div>
@@ -86,37 +99,37 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>(60, 12)
-            system.load|load1  system.load|load5  system.load|load15  \
-time_idx                                                               
-1592304162                NaN                NaN                 NaN   
-1592304163                NaN                NaN                 NaN   
-1592304164                NaN                NaN                 NaN   
-1592304165                0.0               0.05                0.02   
-1592304166                0.0               0.05                0.02   
-
             system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
 time_idx                                                                
-1592304162                      0                 0               0.0   
-1592304163                      0                 0               0.0   
-1592304164                      0                 0               0.0   
-1592304165                      0                 0               0.0   
-1592304166                      0                 0               0.0   
+1592306485                      0                 0          0.251256   
+1592306486                      0                 0          0.000000   
+1592306487                      0                 0          0.000000   
+1592306488                      0                 0          0.000000   
+1592306489                      0                 0          0.000000   
 
             system.cpu|softirq  system.cpu|irq  system.cpu|user  \
 time_idx                                                          
-1592304162            0.000000               0         1.000000   
-1592304163            0.250000               0         0.750000   
-1592304164            0.498753               0         1.246883   
-1592304165            0.000000               0         0.753769   
-1592304166            0.000000               0         0.250627   
+1592306485            0.000000               0         0.753769   
+1592306486            0.250000               0         0.750000   
+1592306487            0.251889               0         1.259446   
+1592306488            0.000000               0         0.505050   
+1592306489            0.000000               0         0.751880   
 
-            system.cpu|system  system.cpu|nice  system.cpu|iowait  
-time_idx                                                           
-1592304162           1.000000                0                0.0  
-1592304163           0.750000                0                0.0  
-1592304164           0.748130                0                0.0  
-1592304165           0.502513                0                0.0  
-1592304166           1.002506                0                0.0  
+            system.cpu|system  system.cpu|nice  system.cpu|iowait  \
+time_idx                                                            
+1592306485           0.502513                0                0.0   
+1592306486           1.000000                0                0.0   
+1592306487           1.007557                0                0.0   
+1592306488           0.757576                0                0.0   
+1592306489           0.501253                0                0.0   
+
+            system.load|load1  system.load|load5  system.load|load15  
+time_idx                                                              
+1592306485               0.14               0.13                0.05  
+1592306486               0.14               0.13                0.05  
+1592306487               0.14               0.13                0.05  
+1592306488               0.14               0.13                0.05  
+1592306489               0.14               0.13                0.05  
 </pre>
 </div>
 </div>
