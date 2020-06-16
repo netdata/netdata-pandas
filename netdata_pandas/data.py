@@ -13,7 +13,7 @@ import requests
 
 
 def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> list:
-    """Get list of all available charts.
+    """Get list of all available charts on a `host`.
 
     ##### Parameters:
     - **host** `str` The host we want to get a list of available charts from.
@@ -34,43 +34,89 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> li
 # Cell
 
 
-async def get_chart(api_call, data, col_sep='|'):
+async def get_chart(api_call: str, data: list, col_sep: str ='|'):
     """Get data for an individual chart.
+
+    ##### Parameters:
+    - **api_call** `tuple` A tuple of (`url`,`chart`) for the url to pull data from and chart it represents.
+    - **data** `list` A list for dataframes for each chart to be appended to.
+    - **col_sep** `str` A character for separating chart and dimension in column names of dataframe.
+
     """
-    url, chart = api_call
+
+    url, chart, host = api_call
     r = await asks.get(url)
     r_json = r.json()
     df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
-    df = df.set_index('time_idx').add_prefix(f'{chart}{col_sep}')
-    data[chart] = df
+    df['host'] = host
+    df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
+    data.append(df)
+
+# Cell
 
 
-async def get_charts(api_calls, col_sep='|'):
+async def get_charts(api_calls, col_sep='|', timeout: int = 60):
     """Create a nursey to make seperate async calls to get each chart.
+
+    ##### Parameters:
+    - **api_calls** `list` A list of tuple's of [(`url`,`chart`),...] of api calls that need to be made.
+    - **col_sep** `str` A character for separating chart and dimension in column names of dataframe.
+    - **timeout** `int` The number of seconds for trio to [move_on_after](https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after).
+
+    ##### Returns:
+    - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index.
     """
-    data = {}
-    with trio.move_on_after(60):
+
+    data = []
+    with trio.move_on_after(timeout):
         async with trio.open_nursery() as nursery:
             for api_call in api_calls:
                 nursery.start_soon(get_chart, api_call, data, col_sep)
     df = pd.concat(data, join='outer', axis=1, sort=True)
-    df.columns = df.columns.droplevel()
     return df
 
+# Cell
 
-def get_data(host: str = 'london.my-netdata.io', charts: list = ['system.cpu'], after: int = -60,
+
+def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
-             ffill: bool = True, diff: bool = False) -> pd.DataFrame:
+             ffill: bool = True, diff: bool = False, timeout: int = 60) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
+
+    ##### Parameters:
+    - **hosts** `list` A list of hosts to pull data from.
+    - **charts** `list` A list of charts to pull data for.
+    - **after** `int` The timestamp or relative integer from which to pull data after.
+    - **before** `int` The timestamp or relative integer from which to pull data before.
+    - **points** `int` The `points` parameter to pass to the api call if need to aggregate data in some way.
+    - **col_sep** `str` A character for separating chart and dimension in column names of dataframe.
+    - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
+    - **ffill** `bool` Set to true if you want to forward fill any null or missing values.
+    - **diff** `bool` Set to true if you want to get the difference of metrics as opposed to their raw value.
+    - **timeout** `int` The number of seconds for trio to [move_on_after](https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after).
+
+    ##### Returns:
+    - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
     """
+
+    # if hosts is a string make it a list of one
+    if isinstance(hosts, str):
+        hosts = [hosts]
+
+    # if specified get all charts
+    if charts == 'all':
+        charts = get_chart_list(hosts[0])
+
+    # define list of all api calls to be made
     api_calls = [
-        (
-            f'http://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json',
-            chart
-        )
-        for chart in charts
+        (f'http://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json', chart, host)
+        for host in hosts for chart in charts
     ]
-    df = trio.run(get_charts, api_calls, col_sep)
+    # get the data
+    df = trio.run(get_charts, api_calls, col_sep, timeout)
+    # post process the data
+    if len(hosts) == 1:
+        df = df.reset_index(level=0, drop=True)
     if numeric_only:
         df = df._get_numeric_data()
     if ffill:

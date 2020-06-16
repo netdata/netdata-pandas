@@ -47,7 +47,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
 </blockquote>
-<p>Get list of all available charts.</p>
+<p>Get list of all available charts on a <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
 <li><strong>host</strong> <code>str</code> The host we want to get a list of available charts from.</li>
 <li><strong>starts_with</strong> <code>str</code> A string to filter the list of charts returns to just those that start with <code>starts_with</code>.</li>
@@ -86,22 +86,6 @@ description: "Read data from netdata rest api into a pandas dataframe."
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -123,9 +107,14 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>, <strong><code>data</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
+<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>)</p>
 </blockquote>
 <p>Get data for an individual chart.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>api_call</strong> <code>tuple</code> A tuple of (<code>url</code>,<code>chart</code>) for the url to pull data from and chart it represents.</li>
+<li><strong>data</strong> <code>list</code> A list for dataframes for each chart to be appended to.</li>
+<li><strong>col_sep</strong> <code>str</code> A character for separating chart and dimension in column names of dataframe.</li>
+</ul>
 
 </div>
 
@@ -141,6 +130,13 @@ description: "Read data from netdata rest api into a pandas dataframe."
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -148,9 +144,17 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L58" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>, <strong><code>col_sep</code></strong>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>api_calls</strong> <code>list</code> A list of tuple's of [(<code>url</code>,<code>chart</code>),...] of api calls that need to be made.</li>
+<li><strong>col_sep</strong> <code>str</code> A character for separating chart and dimension in column names of dataframe.</li>
+<li><strong>timeout</strong> <code>int</code> The number of seconds for trio to <a href="https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after">move_on_after</a>.</li>
+</ul>
+<h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
+<li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index.</li>
+</ul>
 
 </div>
 
@@ -166,6 +170,13 @@ description: "Read data from netdata rest api into a pandas dataframe."
     
 <div class="cell border-box-sizing code_cell rendered">
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
@@ -173,9 +184,24 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'london.my-netdata.io'</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L81" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>hosts</strong> <code>list</code> A list of hosts to pull data from.</li>
+<li><strong>charts</strong> <code>list</code> A list of charts to pull data for.</li>
+<li><strong>after</strong> <code>int</code> The timestamp or relative integer from which to pull data after.</li>
+<li><strong>before</strong> <code>int</code> The timestamp or relative integer from which to pull data before.</li>
+<li><strong>points</strong> <code>int</code> The <code>points</code> parameter to pass to the api call if need to aggregate data in some way.</li>
+<li><strong>col_sep</strong> <code>str</code> A character for separating chart and dimension in column names of dataframe.</li>
+<li><strong>numeric_only</strong> <code>bool</code> Set to true if you want to filter out any non numeric data.</li>
+<li><strong>ffill</strong> <code>bool</code> Set to true if you want to forward fill any null or missing values.</li>
+<li><strong>diff</strong> <code>bool</code> Set to true if you want to get the difference of metrics as opposed to their raw value.</li>
+<li><strong>timeout</strong> <code>int</code> The number of seconds for trio to <a href="https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after">move_on_after</a>.</li>
+</ul>
+<h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
+<li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
+</ul>
 
 </div>
 
@@ -196,7 +222,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># examples</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span><span class="s1">&#39;system.load&#39;</span><span class="p">],</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -211,7 +237,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(61, 12)
+<pre>(67, 2091)
 </pre>
 </div>
 </div>
@@ -238,21 +264,39 @@ description: "Read data from netdata rest api into a pandas dataframe."
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>system.load|load1</th>
-      <th>system.load|load5</th>
-      <th>system.load|load15</th>
-      <th>system.cpu|guest_nice</th>
-      <th>system.cpu|guest</th>
-      <th>system.cpu|steal</th>
-      <th>system.cpu|softirq</th>
-      <th>system.cpu|irq</th>
-      <th>system.cpu|user</th>
-      <th>system.cpu|system</th>
-      <th>system.cpu|nice</th>
-      <th>system.cpu|iowait</th>
+      <th>groups.lwrites|ulog</th>
+      <th>groups.lwrites|messagebus</th>
+      <th>groups.lwrites|unscd</th>
+      <th>groups.lwrites|bind</th>
+      <th>groups.lwrites|nogroup</th>
+      <th>groups.lwrites|ntp</th>
+      <th>groups.lwrites|postfix</th>
+      <th>groups.lwrites|mysql</th>
+      <th>groups.lwrites|www-data</th>
+      <th>groups.lwrites|netdata</th>
+      <th>...</th>
+      <th>cpu.cpu0_softnet_stat|received_rps</th>
+      <th>cpu.cpu0_softnet_stat|flow_limit_count</th>
+      <th>ipv6.icmpneighbor|InSolicits</th>
+      <th>ipv6.icmpneighbor|OutSolicits</th>
+      <th>ipv6.icmpneighbor|InAdvertisements</th>
+      <th>ipv6.icmpneighbor|OutAdvertisements</th>
+      <th>netfilter.synproxy_entries|entries</th>
+      <th>mysql_local.sort_issues|merge_passes</th>
+      <th>mysql_local.sort_issues|range</th>
+      <th>mysql_local.sort_issues|scan</th>
     </tr>
     <tr>
       <th>time_idx</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -269,10 +313,19 @@ description: "Read data from netdata rest api into a pandas dataframe."
   </thead>
   <tbody>
     <tr>
-      <th>1592258620</th>
-      <td>0.01</td>
-      <td>0.02</td>
-      <td>0.0</td>
+      <th>1592302970</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -284,67 +337,104 @@ description: "Read data from netdata rest api into a pandas dataframe."
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1592258621</th>
-      <td>0.01</td>
-      <td>0.02</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <th>1592302973</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1592302974</th>
       <td>0.000000</td>
       <td>0.0</td>
-      <td>0.501253</td>
-      <td>0.751880</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>22.24441</td>
+      <td>34.15204</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1592258622</th>
-      <td>0.01</td>
-      <td>0.02</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <th>1592302975</th>
       <td>0.000000</td>
       <td>0.0</td>
-      <td>1.005025</td>
-      <td>0.753769</td>
       <td>0.0</td>
       <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>42.27810</td>
+      <td>30.32549</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1592258623</th>
-      <td>0.01</td>
-      <td>0.02</td>
+      <th>1592302976</th>
+      <td>0.253904</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.250627</td>
-      <td>0.0</td>
-      <td>0.501253</td>
-      <td>0.501253</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1592258624</th>
-      <td>0.01</td>
-      <td>0.02</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.251256</td>
-      <td>0.753769</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>18.75438</td>
+      <td>35.44889</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
+<p>5 rows × 2091 columns</p>
 </div>
 </div>
 
