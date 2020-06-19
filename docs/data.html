@@ -184,7 +184,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -198,6 +198,10 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>ffill</strong> <code>bool</code> Set to true if you want to forward fill any null or missing values.</li>
 <li><strong>diff</strong> <code>bool</code> Set to true if you want to get the difference of metrics as opposed to their raw value.</li>
 <li><strong>timeout</strong> <code>int</code> The number of seconds for trio to <a href="https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after">move_on_after</a>.</li>
+<li><strong>nunique_thold</strong> [<code>float</code>,<code>int</code>] If defined calls function to filter cols with low number of unique values.</li>
+<li><strong>std_thold</strong> <code>float</code> If defined calls function to filter cols with low standard deviation.</li>
+<li><strong>index_as_datetime</strong> <code>bool</code> If true, set the index to be a pandas datetime.</li>
+<li><strong>freq</strong> <code>str</code> Freq to be passed to pandas datetime index.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
@@ -237,88 +241,80 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(67, 582)
+<pre>(65, 572)
+            users.pwrites|www-data  users.pwrites|netdata  users.pwrites|root  \
+time_idx                                                                        
+1592562486                3.999964               3.984028            7.968056   
+1592562487                0.000000               3.999964            0.000000   
+1592562488                3.999964               3.999964            0.000000   
+1592562489                4.016028               4.016028            0.000000   
+1592562490                0.000000               3.984028            0.000000   
+
+            users.cpu_system|mysql  users.cpu_system|www-data  \
+time_idx                                                        
+1592562486                  0.0000                        0.0   
+1592562487                  0.7272                        0.0   
+1592562488                  0.0000                        0.0   
+1592562489                  0.8366                        0.0   
+1592562490                  0.9999                        0.0   
+
+            users.cpu_system|netdata  users.cpu_system|root  \
+time_idx                                                      
+1592562486                    0.0000                 0.9960   
+1592562487                    3.6363                 0.7272   
+1592562488                    0.0000                 0.9999   
+1592562489                    1.6733                 0.8366   
+1592562490                    0.9999                 1.9959   
+
             users.cpu_user|mysql  users.cpu_user|www-data  \
 time_idx                                                    
-1592309208                   NaN                      NaN   
-1592309209                 0.000                   0.0000   
-1592309210                 0.000                   0.5518   
-1592309211                 1.004                   0.0000   
-1592309212                 0.000                   0.0000   
+1592562486                0.0000                   0.9999   
+1592562487                0.0000                   0.0000   
+1592562488                0.9999                   0.0000   
+1592562489                0.0000                   0.0000   
+1592562490                0.0000                   0.0000   
 
-            users.cpu_user|netdata  users.cpu_user|root  \
+            users.cpu_user|netdata  ...  services.mem_usage|unscd  \
+time_idx                            ...                             
+1592562486                  2.9999  ...                       NaN   
+1592562487                  2.1817  ...                       NaN   
+1592562488                  1.9998  ...                       NaN   
+1592562489                  1.6733  ...                  0.433594   
+1592562490                  0.9999  ...                  0.433594   
+
+            services.mem_usage|netdata  services.mem_usage|mariadb  \
+time_idx                                                             
+1592562486                         NaN                         NaN   
+1592562487                         NaN                         NaN   
+1592562488                         NaN                         NaN   
+1592562489                    2079.699                    67.71484   
+1592562490                    2079.637                    69.35547   
+
+            services.throttle_io_write|netdata  services.cpu|nginx  \
+time_idx                                                             
+1592562486                                 NaN                 NaN   
+1592562487                                 NaN                 NaN   
+1592562488                                 NaN                 NaN   
+1592562489                                 0.0            0.672912   
+1592562490                                 0.0            0.997633   
+
+            services.cpu|ssh  services.cpu|gvpe  services.cpu|netdata  \
+time_idx                                                                
+1592562486               NaN                NaN                   NaN   
+1592562487               NaN                NaN                   NaN   
+1592562488               NaN                NaN                   NaN   
+1592562489               0.0                0.0              4.675386   
+1592562490               0.0                0.0              5.658710   
+
+            services.cpu|mariadb  mysql_local.tmp|tables  
 time_idx                                                  
-1592309208                     NaN                  NaN   
-1592309209                  0.6048                  0.0   
-1592309210                  1.1081                  0.0   
-1592309211                  0.0000                  0.0   
-1592309212                  4.9918                  0.0   
+1592562486                   NaN                     NaN  
+1592562487                   NaN                     NaN  
+1592562488                   NaN                1.999850  
+1592562489              1.345825                2.000190  
+1592562490              1.324721                1.998981  
 
-            users.minor_faults|mysql  users.minor_faults|netdata  \
-time_idx                                                           
-1592309208                       NaN                         NaN   
-1592309209                  270.9706                    708.0329   
-1592309210                  702.0080                    514.2706   
-1592309211                  384.5346                    622.4840   
-1592309212                 1266.9885                   2253.2500   
-
-            users.lreads|www-data  users.lreads|netdata  users.lreads|root  \
-time_idx                                                                     
-1592309208                    NaN                   NaN                NaN   
-1592309209               0.000000              90.45546          124.32087   
-1592309210               0.000000              90.75445          119.55008   
-1592309211              16.591608             172.40830          120.28098   
-1592309212              32.230180             355.74040          119.86986   
-
-            users.files|netdata  ...  ipv6.mcast|received  \
-time_idx                         ...                        
-1592309208                  NaN  ...                  NaN   
-1592309209                 38.0  ...                  NaN   
-1592309210                 38.0  ...                  NaN   
-1592309211                 37.0  ...                  NaN   
-1592309212                 38.0  ...                  NaN   
-
-            ipv4.packets|received  ipv4.packets|sent  ipv4.packets|delivered  \
-time_idx                                                                       
-1592309208                    NaN                NaN                     NaN   
-1592309209                    NaN                NaN                     NaN   
-1592309210                    NaN                NaN                     NaN   
-1592309211                    NaN                NaN                     NaN   
-1592309212                    NaN                NaN                     NaN   
-
-            cpu.cpu2_softnet_stat|processed  system.softnet_stat|processed  \
-time_idx                                                                     
-1592309208                              NaN                            NaN   
-1592309209                              NaN                            NaN   
-1592309210                              NaN                            NaN   
-1592309211                              NaN                            NaN   
-1592309212                              NaN                            NaN   
-
-            netfilter.conntrack_new|ignore  netfilter.conntrack_new|invalid  \
-time_idx                                                                      
-1592309208                             NaN                              NaN   
-1592309209                             NaN                              NaN   
-1592309210                             NaN                              NaN   
-1592309211                             NaN                              NaN   
-1592309212                             NaN                              NaN   
-
-            cpu.cpu0_softnet_stat|processed  \
-time_idx                                      
-1592309208                              NaN   
-1592309209                              NaN   
-1592309210                              NaN   
-1592309211                              NaN   
-1592309212                              NaN   
-
-            netfilter.conntrack_sockets|connections  
-time_idx                                             
-1592309208                                      NaN  
-1592309209                                      NaN  
-1592309210                                      NaN  
-1592309211                                      NaN  
-1592309212                                      NaN  
-
-[5 rows x 582 columns]
+[5 rows x 572 columns]
 </pre>
 </div>
 </div>
@@ -350,6 +346,11 @@ time_idx
 <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;(60, 12)&#39;</span> <span class="ow">or</span> <span class="s1">&#39;(61, 12)&#39;</span>
 <span class="c1"># check that all types are float64 or int64</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">!=</span> <span class="s1">&#39;int64&#39;</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">!=</span> <span class="s1">&#39;float64&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="c1"># test index as datetime</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span> <span class="n">index_as_datetime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">datetimes</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">tseries</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
 </pre></div>
 
     </div>

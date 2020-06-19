@@ -84,7 +84,7 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> p
 def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
-             std_thold: float = None) -> pd.DataFrame:
+             std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -98,6 +98,11 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **ffill** `bool` Set to true if you want to forward fill any null or missing values.
     - **diff** `bool` Set to true if you want to get the difference of metrics as opposed to their raw value.
     - **timeout** `int` The number of seconds for trio to [move_on_after](https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after).
+    - **nunique_thold** [`float`,`int`] If defined calls function to filter cols with low number of unique values.
+    - **std_thold** `float` If defined calls function to filter cols with low standard deviation.
+    - **index_as_datetime** `bool` If true, set the index to be a pandas datetime.
+    - **freq** `str` Freq to be passed to pandas datetime index.
+
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -108,9 +113,14 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     if isinstance(hosts, str):
         hosts = [hosts]
 
-    # if specified get all charts
-    if charts == 'all':
-        charts = get_chart_list(hosts[0])
+    # if charts is a string make it a list of one
+    if isinstance(charts, str):
+        # if specified get all charts
+        if charts == 'all':
+            charts = get_chart_list(hosts[0])
+        else:
+            charts = [charts]
+
 
     # define list of all api calls to be made
     api_calls = [
@@ -132,4 +142,6 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         df = drop_low_uniqueness_cols(df, nunique_thold)
     if std_thold:
         df = drop_low_std_cols(df, std_thold)
+    if index_as_datetime:
+        df = df.set_index(pd.DatetimeIndex(pd.to_datetime(df.index, unit='s'), freq=freq))
     return df
