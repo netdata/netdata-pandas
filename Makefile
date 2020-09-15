@@ -2,6 +2,10 @@ SRC = $(wildcard ./*.ipynb)
 
 all: netdata-pandas docs
 
+build: $(SRC)
+	nbdev_build_lib
+	touch netdata-pandas
+
 netdata-pandas: $(SRC)
 	nbdev_build_lib
 	touch netdata-pandas
@@ -15,6 +19,9 @@ docs: $(SRC)
 
 test:
 	nbdev_test_nbs
+
+bump:
+	nbdev_bump_version
 
 release: pypi
 	nbdev_bump_version

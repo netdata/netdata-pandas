@@ -241,80 +241,112 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(65, 572)
-            users.pwrites|www-data  users.pwrites|netdata  users.pwrites|root  \
-time_idx                                                                        
-1592562486                3.999964               3.984028            7.968056   
-1592562487                0.000000               3.999964            0.000000   
-1592562488                3.999964               3.999964            0.000000   
-1592562489                4.016028               4.016028            0.000000   
-1592562490                0.000000               3.984028            0.000000   
+<pre>(64, 578)
+            netdata.runtime_nginx_local|run time  \
+time_idx                                           
+1600176565                                   NaN   
+1600176566                                   3.0   
+1600176567                                   2.0   
+1600176568                                   4.0   
+1600176569                                   3.0   
 
-            users.cpu_system|mysql  users.cpu_system|www-data  \
-time_idx                                                        
-1592562486                  0.0000                        0.0   
-1592562487                  0.7272                        0.0   
-1592562488                  0.0000                        0.0   
-1592562489                  0.8366                        0.0   
-1592562490                  0.9999                        0.0   
+            web_log_nginx.response_statuses|success  \
+time_idx                                              
+1600176565                                 5.668852   
+1600176566                                 3.225919   
+1600176567                                 4.886060   
+1600176568                                 3.891150   
+1600176569                                 3.331827   
 
-            users.cpu_system|netdata  users.cpu_system|root  \
-time_idx                                                      
-1592562486                    0.0000                 0.9960   
-1592562487                    3.6363                 0.7272   
-1592562488                    0.0000                 0.9999   
-1592562489                    1.6733                 0.8366   
-1592562490                    0.9999                 1.9959   
+            netdata.web_thread2_cpu|user  netdata.web_thread2_cpu|system  \
+time_idx                                                                   
+1600176565                           NaN                             NaN   
+1600176566                           NaN                             NaN   
+1600176567                           0.0                             0.0   
+1600176568                           0.0                             0.0   
+1600176569                           0.0                             0.0   
 
-            users.cpu_user|mysql  users.cpu_user|www-data  \
-time_idx                                                    
-1592562486                0.0000                   0.9999   
-1592562487                0.0000                   0.0000   
-1592562488                0.9999                   0.0000   
-1592562489                0.0000                   0.0000   
-1592562490                0.0000                   0.0000   
+            netdata.runtime_ntpd_local|run time  \
+time_idx                                          
+1600176565                                  NaN   
+1600176566                                  3.0   
+1600176567                                  3.0   
+1600176568                                  4.0   
+1600176569                                  3.0   
 
-            users.cpu_user|netdata  ...  services.mem_usage|unscd  \
-time_idx                            ...                             
-1592562486                  2.9999  ...                       NaN   
-1592562487                  2.1817  ...                       NaN   
-1592562488                  1.9998  ...                       NaN   
-1592562489                  1.6733  ...                  0.433594   
-1592562490                  0.9999  ...                  0.433594   
+            nginx_local.requests|requests  \
+time_idx                                    
+1600176565                            NaN   
+1600176566                       4.262626   
+1600176567                       4.158503   
+1600176568                       4.999583   
+1600176569                       3.841192   
 
-            services.mem_usage|netdata  services.mem_usage|mariadb  \
-time_idx                                                             
-1592562486                         NaN                         NaN   
-1592562487                         NaN                         NaN   
-1592562488                         NaN                         NaN   
-1592562489                    2079.699                    67.71484   
-1592562490                    2079.637                    69.35547   
+            netdata.runtime_mysql_local|run time  \
+time_idx                                           
+1600176565                                   NaN   
+1600176566                                  17.0   
+1600176567                                  12.0   
+1600176568                                  20.0   
+1600176569                                   9.0   
 
-            services.throttle_io_write|netdata  services.cpu|nginx  \
-time_idx                                                             
-1592562486                                 NaN                 NaN   
-1592562487                                 NaN                 NaN   
-1592562488                                 NaN                 NaN   
-1592562489                                 0.0            0.672912   
-1592562490                                 0.0            0.997633   
+            nginx_local.connections|active  web_log_nginx.clients_all|ipv4  \
+time_idx                                                                     
+1600176565                             NaN                        686074.0   
+1600176566                           127.0                        686074.0   
+1600176567                           127.0                        686074.0   
+1600176568                           127.0                        686074.0   
+1600176569                           125.0                        686074.0   
 
-            services.cpu|ssh  services.cpu|gvpe  services.cpu|netdata  \
-time_idx                                                                
-1592562486               NaN                NaN                   NaN   
-1592562487               NaN                NaN                   NaN   
-1592562488               NaN                NaN                   NaN   
-1592562489               0.0                0.0              4.675386   
-1592562490               0.0                0.0              5.658710   
+            web_log_nginx.response_time|min  ...  groups.uptime_min|bind  \
+time_idx                                     ...                           
+1600176565                              0.0  ...                     NaN   
+1600176566                              0.0  ...                     NaN   
+1600176567                              0.0  ...                     NaN   
+1600176568                              0.0  ...                     NaN   
+1600176569                              0.0  ...              59312570.0   
 
-            services.cpu|mariadb  mysql_local.tmp|tables  
-time_idx                                                  
-1592562486                   NaN                     NaN  
-1592562487                   NaN                     NaN  
-1592562488                   NaN                1.999850  
-1592562489              1.345825                2.000190  
-1592562490              1.324721                1.998981  
+            groups.uptime_min|nogroup  groups.uptime_min|ntp  \
+time_idx                                                       
+1600176565                        NaN                    NaN   
+1600176566                        NaN                    NaN   
+1600176567                        NaN                    NaN   
+1600176568                        NaN                    NaN   
+1600176569                 59312570.0             59312570.0   
 
-[5 rows x 572 columns]
+            groups.uptime_min|postfix  groups.uptime_min|mysql  \
+time_idx                                                         
+1600176565                        NaN                      NaN   
+1600176566                        NaN                      NaN   
+1600176567                        NaN                      NaN   
+1600176568                        NaN                      NaN   
+1600176569                      382.0               50720610.0   
+
+            groups.uptime_min|www-data  groups.uptime_min|netdata  \
+time_idx                                                            
+1600176565                         NaN                        NaN   
+1600176566                         NaN                        NaN   
+1600176567                         NaN                        NaN   
+1600176568                         NaN                        NaN   
+1600176569                   2616909.0                     1184.0   
+
+            groups.uptime_min|root  apps.sockets|httpd  \
+time_idx                                                 
+1600176565                     NaN                 NaN   
+1600176566                     NaN                 NaN   
+1600176567                     NaN                 NaN   
+1600176568                     NaN                 NaN   
+1600176569                 14099.0               162.0   
+
+            netdata.requests|requests  
+time_idx                               
+1600176565                        NaN  
+1600176566                        NaN  
+1600176567                        NaN  
+1600176568                        NaN  
+1600176569                   4.000524  
+
+[5 rows x 578 columns]
 </pre>
 </div>
 </div>

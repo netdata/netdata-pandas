@@ -17,7 +17,7 @@ More detailed documentation can be found at https://netdata.github.io/netdata-pa
 
 Get some data into a pandas dataframe.
 
-```python
+```
 from netdata_pandas.data import get_data
 
 df = get_data('london.my-netdata.io', ['system.cpu','system.load'], after=-60, before=0)
