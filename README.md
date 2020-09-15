@@ -17,46 +17,62 @@ More detailed documentation can be found at https://netdata.github.io/netdata-pa
 
 Get some data into a pandas dataframe.
 
-```
+```python
 from netdata_pandas.data import get_data
 
-df = get_data('london.my-netdata.io', ['system.cpu','system.load'], after=-60, before=0)
+df = get_data('london.my-netdata.io', ['system.cpu','system.load','system.ram'], after=-60, before=0)
 print(df.shape)
 print(df.head())
 ```
 
-    (60, 12)
+    (61, 16)
                 system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
     time_idx                                                                
-    1592303824                      0                 0          0.250627   
-    1592303825                      0                 0          0.000000   
-    1592303826                      0                 0          0.000000   
-    1592303827                      0                 0          0.000000   
-    1592303828                      0                 0          0.000000   
+    1600178015                    NaN               NaN               NaN   
+    1600178020                    0.0               0.0               0.0   
+    1600178021                    0.0               0.0               0.0   
+    1600178022                    0.0               0.0               0.0   
+    1600178023                    0.0               0.0               0.0   
     
                 system.cpu|softirq  system.cpu|irq  system.cpu|user  \
     time_idx                                                          
-    1592303824            0.250627               0         0.501253   
-    1592303825            0.000000               0         1.250000   
-    1592303826            0.000000               0         0.502513   
-    1592303827            0.000000               0         1.005025   
-    1592303828            0.000000               0         1.002506   
+    1600178015                 NaN             NaN              NaN   
+    1600178020            0.000000             0.0         0.753769   
+    1600178021            0.000000             0.0         0.251256   
+    1600178022            0.251256             0.0         0.753769   
+    1600178023            0.000000             0.0         0.751880   
     
                 system.cpu|system  system.cpu|nice  system.cpu|iowait  \
     time_idx                                                            
-    1592303824           0.501253                0                0.0   
-    1592303825           0.500000                0                0.0   
-    1592303826           0.502513                0                0.0   
-    1592303827           1.005025                0                0.0   
-    1592303828           0.250627                0                0.0   
+    1600178015                NaN              NaN                NaN   
+    1600178020           0.251256              0.0                0.0   
+    1600178021           0.753769              0.0                0.0   
+    1600178022           0.251256              0.0                0.0   
+    1600178023           0.501253              0.0                0.0   
     
-                system.load|load1  system.load|load5  system.load|load15  
-    time_idx                                                              
-    1592303824                NaN                NaN                 NaN  
-    1592303825                0.0               0.02                 0.0  
-    1592303826                0.0               0.02                 0.0  
-    1592303827                0.0               0.02                 0.0  
-    1592303828                0.0               0.02                 0.0  
+                system.ram|free  system.ram|used  system.ram|cached  \
+    time_idx                                                          
+    1600178015              NaN              NaN                NaN   
+    1600178020         2927.668         2543.215           2443.664   
+    1600178021         2927.852         2543.031           2443.664   
+    1600178022         2927.645         2543.242           2443.660   
+    1600178023         2926.496         2544.383           2443.668   
+    
+                system.ram|buffers  system.load|load1  system.load|load5  \
+    time_idx                                                               
+    1600178015                 NaN               0.02               0.04   
+    1600178020            73.10156               0.02               0.04   
+    1600178021            73.10156               0.02               0.04   
+    1600178022            73.10156               0.02               0.04   
+    1600178023            73.10156               0.02               0.04   
+    
+                system.load|load15  
+    time_idx                        
+    1600178015                 0.0  
+    1600178020                 0.0  
+    1600178021                 0.0  
+    1600178022                 0.0  
+    1600178023                 0.0  
 
 
 ## Examples

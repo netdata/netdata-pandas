@@ -83,7 +83,7 @@ description: "A helper library to pull data from netdata api into a pandas dataf
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">netdata_pandas.data</span> <span class="kn">import</span> <span class="n">get_data</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span><span class="s1">&#39;system.load&#39;</span><span class="p">],</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span><span class="s1">&#39;system.load&#39;</span><span class="p">,</span><span class="s1">&#39;system.ram&#39;</span><span class="p">],</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
@@ -98,38 +98,54 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(61, 12)
-            system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
-time_idx                                                                
-1600177580                    NaN               NaN               NaN   
-1600177581                    0.0               0.0               0.0   
-1600177582                    0.0               0.0               0.0   
-1600177583                    0.0               0.0               0.0   
-1600177584                    0.0               0.0               0.0   
-
-            system.cpu|softirq  system.cpu|irq  system.cpu|user  \
+<pre>(60, 16)
+            system.ram|free  system.ram|used  system.ram|cached  \
 time_idx                                                          
-1600177580                 NaN             NaN              NaN   
-1600177581                0.00             0.0         0.252525   
-1600177582                0.25             0.0         1.000000   
-1600177583                0.00             0.0         1.002506   
-1600177584                0.00             0.0         0.503778   
+1600178140         2926.316         2544.383           2443.848   
+1600178141         2926.113         2544.582           2443.852   
+1600178142         2927.773         2542.922           2443.852   
+1600178143         2927.957         2542.738           2443.852   
+1600178144         2927.746         2542.945           2443.855   
 
-            system.cpu|system  system.cpu|nice  system.cpu|iowait  \
-time_idx                                                            
-1600177580                NaN              NaN                NaN   
-1600177581           0.252525              0.0                0.0   
-1600177582           0.750000              0.0                0.0   
-1600177583           0.250627              0.0                0.0   
-1600177584           0.503778              0.0                0.0   
+            system.ram|buffers  system.cpu|guest_nice  system.cpu|guest  \
+time_idx                                                                  
+1600178140            73.10156                      0                 0   
+1600178141            73.10156                      0                 0   
+1600178142            73.10156                      0                 0   
+1600178143            73.10156                      0                 0   
+1600178144            73.10156                      0                 0   
 
-            system.load|load1  system.load|load5  system.load|load15  
+            system.cpu|steal  system.cpu|softirq  system.cpu|irq  \
+time_idx                                                           
+1600178140               0.0                 0.0               0   
+1600178141               0.0                 0.0               0   
+1600178142               0.0                 0.0               0   
+1600178143               0.0                 0.0               0   
+1600178144               0.0                 0.0               0   
+
+            system.cpu|user  system.cpu|system  system.cpu|nice  \
+time_idx                                                          
+1600178140         0.500000           1.000000                0   
+1600178141         0.251256           0.753769                0   
+1600178142         0.502513           0.502513                0   
+1600178143         0.503778           0.251889                0   
+1600178144         0.501253           0.751880                0   
+
+            system.cpu|iowait  system.load|load1  system.load|load5  \
 time_idx                                                              
-1600177580                0.0               0.02                 0.0  
-1600177581                0.0               0.02                 0.0  
-1600177582                0.0               0.02                 0.0  
-1600177583                0.0               0.02                 0.0  
-1600177584                0.0               0.02                 0.0  
+1600178140                  0               0.08               0.04   
+1600178141                  0               0.08               0.04   
+1600178142                  0               0.08               0.04   
+1600178143                  0               0.08               0.04   
+1600178144                  0               0.08               0.04   
+
+            system.load|load15  
+time_idx                        
+1600178140                0.01  
+1600178141                0.01  
+1600178142                0.01  
+1600178143                0.01  
+1600178144                0.01  
 </pre>
 </div>
 </div>
