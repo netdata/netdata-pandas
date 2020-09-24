@@ -6,6 +6,9 @@ build: $(SRC)
 	nbdev_build_lib
 	touch netdata-pandas
 
+version: $(SRC)
+	nbdev_bump_version
+
 netdata-pandas: $(SRC)
 	nbdev_build_lib
 	touch netdata-pandas

@@ -241,112 +241,80 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(64, 578)
-            netdata.runtime_nginx_local|run time  \
-time_idx                                           
-1600176565                                   NaN   
-1600176566                                   3.0   
-1600176567                                   2.0   
-1600176568                                   4.0   
-1600176569                                   3.0   
-
-            web_log_nginx.response_statuses|success  \
-time_idx                                              
-1600176565                                 5.668852   
-1600176566                                 3.225919   
-1600176567                                 4.886060   
-1600176568                                 3.891150   
-1600176569                                 3.331827   
-
-            netdata.web_thread2_cpu|user  netdata.web_thread2_cpu|system  \
-time_idx                                                                   
-1600176565                           NaN                             NaN   
-1600176566                           NaN                             NaN   
-1600176567                           0.0                             0.0   
-1600176568                           0.0                             0.0   
-1600176569                           0.0                             0.0   
-
-            netdata.runtime_ntpd_local|run time  \
-time_idx                                          
-1600176565                                  NaN   
-1600176566                                  3.0   
-1600176567                                  3.0   
-1600176568                                  4.0   
-1600176569                                  3.0   
-
-            nginx_local.requests|requests  \
-time_idx                                    
-1600176565                            NaN   
-1600176566                       4.262626   
-1600176567                       4.158503   
-1600176568                       4.999583   
-1600176569                       3.841192   
-
-            netdata.runtime_mysql_local|run time  \
-time_idx                                           
-1600176565                                   NaN   
-1600176566                                  17.0   
-1600176567                                  12.0   
-1600176568                                  20.0   
-1600176569                                   9.0   
-
-            nginx_local.connections|active  web_log_nginx.clients_all|ipv4  \
+<pre>(64, 554)
+            disk_mops.vda|writes  netdata.requests|requests  system.io|out  \
 time_idx                                                                     
-1600176565                             NaN                        686074.0   
-1600176566                           127.0                        686074.0   
-1600176567                           127.0                        686074.0   
-1600176568                           127.0                        686074.0   
-1600176569                           125.0                        686074.0   
+1600946595                   NaN                        NaN            NaN   
+1600946596              0.000000                  23.293680      -10.76060   
+1600946597              0.000000                  20.323980       -5.23940   
+1600946598              0.000000                   8.903625        0.00000   
+1600946599             -5.390782                   3.326795      -26.95286   
 
-            web_log_nginx.response_time|min  ...  groups.uptime_min|bind  \
-time_idx                                     ...                           
-1600176565                              0.0  ...                     NaN   
-1600176566                              0.0  ...                     NaN   
-1600176567                              0.0  ...                     NaN   
-1600176568                              0.0  ...                     NaN   
-1600176569                              0.0  ...              59312570.0   
-
-            groups.uptime_min|nogroup  groups.uptime_min|ntp  \
-time_idx                                                       
-1600176565                        NaN                    NaN   
-1600176566                        NaN                    NaN   
-1600176567                        NaN                    NaN   
-1600176568                        NaN                    NaN   
-1600176569                 59312570.0             59312570.0   
-
-            groups.uptime_min|postfix  groups.uptime_min|mysql  \
+            netdata.server_cpu|user  netdata.server_cpu|system  \
 time_idx                                                         
-1600176565                        NaN                      NaN   
-1600176566                        NaN                      NaN   
-1600176567                        NaN                      NaN   
-1600176568                        NaN                      NaN   
-1600176569                      382.0               50720610.0   
+1600946595                      NaN                        NaN   
+1600946596                13.287540                   9.293180   
+1600946597                17.394410                   2.620197   
+1600946598                 9.230359                   8.083418   
+1600946599                 9.390573                   3.916582   
 
-            groups.uptime_min|www-data  groups.uptime_min|netdata  \
-time_idx                                                            
-1600176565                         NaN                        NaN   
-1600176566                         NaN                        NaN   
-1600176567                         NaN                        NaN   
-1600176568                         NaN                        NaN   
-1600176569                   2616909.0                     1184.0   
+            netdata.queries|queries  services.mem_usage|nginx  \
+time_idx                                                        
+1600946595                      NaN                       NaN   
+1600946596                16.975970                 13.398438   
+1600946597                17.012430                 13.519531   
+1600946598                 5.555713                 13.398438   
+1600946599                 0.000000                 13.519531   
 
-            groups.uptime_min|root  apps.sockets|httpd  \
-time_idx                                                 
-1600176565                     NaN                 NaN   
-1600176566                     NaN                 NaN   
-1600176567                     NaN                 NaN   
-1600176568                     NaN                 NaN   
-1600176569                 14099.0               162.0   
+            services.mem_usage|netdata  services.mem_usage|mariadb  \
+time_idx                                                             
+1600946595                         NaN                         NaN   
+1600946596                    2218.508                    63.83594   
+1600946597                    2216.363                    63.84766   
+1600946598                    2216.559                    63.84766   
+1600946599                    2216.383                    63.84766   
 
-            netdata.requests|requests  
-time_idx                               
-1600176565                        NaN  
-1600176566                        NaN  
-1600176567                        NaN  
-1600176568                        NaN  
-1600176569                   4.000524  
+            netdata.db_points|read  ...  apps.uptime|time  apps.uptime|named  \
+time_idx                            ...                                        
+1600946595                     NaN  ...               NaN                NaN   
+1600946596               24429.630  ...               NaN                NaN   
+1600946597               23717.330  ...               NaN                NaN   
+1600946598                7745.365  ...        60082600.0         60082600.0   
+1600946599                   0.000  ...        60082600.0         60082600.0   
 
-[5 rows x 578 columns]
+            apps.uptime|cron  apps.uptime|ksmd  apps.uptime|system  \
+time_idx                                                             
+1600946595               NaN               NaN                 NaN   
+1600946596               NaN               NaN                 NaN   
+1600946597               NaN               NaN                 NaN   
+1600946598        60082600.0        60082600.0          60082600.0   
+1600946599        60082600.0        60082600.0          60082600.0   
+
+            apps.uptime|kernel  apps.uptime|other  \
+time_idx                                            
+1600946595                 NaN                NaN   
+1600946596                 NaN                NaN   
+1600946597                 NaN                NaN   
+1600946598          60082600.0         60082600.0   
+1600946599          60082600.0         60082600.0   
+
+            mysql_local.queries|queries  mysql_local.queries|questions  \
+time_idx                                                                 
+1600946595                          NaN                            NaN   
+1600946596                          NaN                            NaN   
+1600946597                          NaN                            NaN   
+1600946598                          NaN                            NaN   
+1600946599                     4.000374                       4.000374   
+
+            nginx_local.requests|requests  
+time_idx                                   
+1600946595                            NaN  
+1600946596                            NaN  
+1600946597                            NaN  
+1600946598                            NaN  
+1600946599                       7.965186  
+
+[5 rows x 554 columns]
 </pre>
 </div>
 </div>
@@ -383,6 +351,68 @@ time_idx
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span> <span class="n">index_as_datetime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">datetimes</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">tseries</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L152" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
+</blockquote>
+<p>Get alarm log from <code>host</code>.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>host</strong> <code>str</code> The host we want to get the alarm log from.</li>
+</ul>
+<h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
+<li><strong>df</strong> <code>pd.DataFrame</code> A df of the alarm_log.</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tests </span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_alarm_log</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">)</span>
+
+<span class="n">expected_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span><span class="p">,</span> <span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="s1">&#39;alarm_id&#39;</span><span class="p">,</span> <span class="s1">&#39;alarm_event_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;chart&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">,</span> <span class="s1">&#39;processed&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="s1">&#39;exec_run&#39;</span><span class="p">,</span> <span class="s1">&#39;exec_failed&#39;</span><span class="p">,</span> <span class="s1">&#39;exec&#39;</span><span class="p">,</span> <span class="s1">&#39;recipient&#39;</span><span class="p">,</span> <span class="s1">&#39;exec_code&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="s1">&#39;non_clear_duration&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;old_status&#39;</span><span class="p">,</span> <span class="s1">&#39;delay&#39;</span><span class="p">,</span> <span class="s1">&#39;delay_up_to_timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;updated_by_id&#39;</span><span class="p">,</span> <span class="s1">&#39;updates_id&#39;</span><span class="p">,</span> <span class="s1">&#39;value_string&#39;</span><span class="p">,</span> <span class="s1">&#39;old_value_string&#39;</span><span class="p">,</span> <span class="s1">&#39;last_repeat&#39;</span><span class="p">,</span> <span class="s1">&#39;silenced&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;old_value&#39;</span><span class="p">,</span> <span class="s1">&#39;no_clear_notification&#39;</span><span class="p">]</span>
+
+<span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_cols</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
 </pre></div>
 
     </div>

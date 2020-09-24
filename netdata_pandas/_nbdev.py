@@ -6,6 +6,7 @@ index = {"get_chart_list": "00_data.ipynb",
          "get_chart": "00_data.ipynb",
          "get_charts": "00_data.ipynb",
          "get_data": "00_data.ipynb",
+         "get_alarm_log": "00_data.ipynb",
          "drop_low_uniqueness_cols": "01_wrangle.ipynb",
          "drop_low_std_cols": "01_wrangle.ipynb"}
 
