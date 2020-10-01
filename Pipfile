@@ -14,7 +14,7 @@ netdata-pandas = {editable = true, path = "."}
 pandas = "==1.0.4"
 asks = "==2.3.7"
 trio = "==0.16.0"
-requests = "==2.23.0"
+requests = "==2.24.0"
 anyio = "==1.4.0"
 nbdev = "==0.2.18"
 
