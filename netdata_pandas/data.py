@@ -84,7 +84,8 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> p
 def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
-             std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer', group: str = 'average') -> pd.DataFrame:
+             std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
+             group: str = 'average', sort_cols: bool = True) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -103,6 +104,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **index_as_datetime** `bool` If true, set the index to be a pandas datetime.
     - **freq** `str` Freq to be passed to pandas datetime index.
     - **group** `str` The grouping function to use.
+    - **sort_cols** `bool` True to sort columns by name.
 
 
     ##### Returns:
@@ -145,6 +147,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         df = drop_low_std_cols(df, std_thold)
     if index_as_datetime:
         df = df.set_index(pd.DatetimeIndex(pd.to_datetime(df.index, unit='s'), freq=freq))
+    if sort_cols:
+        df = df.reindex(sorted(df.columns), axis=1)
     return df
 
 # Cell
