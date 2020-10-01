@@ -84,7 +84,7 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> p
 def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
-             std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer') -> pd.DataFrame:
+             std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer', group: str = 'average') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -102,6 +102,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **std_thold** `float` If defined calls function to filter cols with low standard deviation.
     - **index_as_datetime** `bool` If true, set the index to be a pandas datetime.
     - **freq** `str` Freq to be passed to pandas datetime index.
+    - **group** `str` The grouping function to use.
 
 
     ##### Returns:
@@ -124,7 +125,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 
     # define list of all api calls to be made
     api_calls = [
-        (f'http://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json', chart, host)
+        (f'http://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json&group={group}', chart, host)
         for host in hosts for chart in charts
     ]
     # get the data
