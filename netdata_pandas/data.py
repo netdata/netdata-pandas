@@ -179,12 +179,13 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True) -> pd.D
 # Cell
 
 
-def get_allmetrics(host, charts: list = None):
+def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|'):
     """Get allmetrics into a df.
 
     ##### Parameters:
     - **host** `str` The host we want to get the alarm log from.
     - **charts** `list` A list of charts to pull data for.
+    - **wide** `bool` True if you want to return the data in wide format as opposed to long.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the latest data from allmetrics.
@@ -206,5 +207,8 @@ def get_allmetrics(host, charts: list = None):
                     [time, k, "{}.{}".format(k, dimensions[dimension]['name']), dimensions[dimension]['value']]
                 )
     df = pd.DataFrame(data, columns=['time','chart','dimension','value'])
+    if wide:
+        df['key'] = df['chart'] + col_sep + df['dimension']
+        df = df[['key', 'value']].groupby('key').mean().reset_index().pivot_table(columns=['key'])
     return df
 
