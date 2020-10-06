@@ -179,7 +179,7 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True) -> pd.D
 # Cell
 
 
-def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|'):
+def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True):
     """Get allmetrics into a df.
 
     ##### Parameters:
@@ -210,5 +210,7 @@ def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str =
     if wide:
         df['key'] = df['chart'] + col_sep + df['dimension']
         df = df[['key', 'value']].groupby('key').mean().reset_index().pivot_table(columns=['key'])
+        if sort_cols:
+            df = df.reindex(sorted(df.columns), axis=1)
     return df
 
