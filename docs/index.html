@@ -98,38 +98,38 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(60, 12)
-            system.cpu|guest_nice  system.cpu|guest  system.cpu|steal  \
-time_idx                                                                
-1600946808                      0                 0          0.000000   
-1600946809                      0                 0          0.000000   
-1600946810                      0                 0          0.000000   
-1600946811                      0                 0          0.000000   
-1600946812                      0                 0          0.251889   
+<pre>(61, 12)
+            system.cpu|guest  system.cpu|guest_nice  system.cpu|iowait  \
+time_idx                                                                 
+1601981900               NaN                    NaN                NaN   
+1601981901               0.0                    0.0                0.0   
+1601981902               0.0                    0.0                0.0   
+1601981903               0.0                    0.0                0.0   
+1601981904               0.0                    0.0                0.0   
 
-            system.cpu|softirq  system.cpu|irq  system.cpu|user  \
+            system.cpu|irq  system.cpu|nice  system.cpu|softirq  \
 time_idx                                                          
-1600946808            0.251256               0         0.502513   
-1600946809            0.000000               0         0.501253   
-1600946810            0.000000               0         0.503778   
-1600946811            0.250000               0         0.750000   
-1600946812            0.000000               0         0.755668   
+1601981900             NaN              NaN                 NaN   
+1601981901             0.0              0.0                 0.0   
+1601981902             0.0              0.0                 0.0   
+1601981903             0.0              0.0                 0.0   
+1601981904             0.0              0.0                 0.0   
 
-            system.cpu|system  system.cpu|nice  system.cpu|iowait  \
-time_idx                                                            
-1600946808           0.251256                0                  0   
-1600946809           1.002506                0                  0   
-1600946810           0.251889                0                  0   
-1600946811           0.500000                0                  0   
-1600946812           0.251889                0                  0   
+            system.cpu|steal  system.cpu|system  system.cpu|user  \
+time_idx                                                           
+1601981900               NaN                NaN              NaN   
+1601981901          0.000000           0.503778         0.503778   
+1601981902          0.000000           0.750000         0.750000   
+1601981903          0.000000           0.502513         0.753769   
+1601981904          0.251889           0.755668         0.251889   
 
-            system.load|load1  system.load|load5  system.load|load15  
+            system.load|load1  system.load|load15  system.load|load5  
 time_idx                                                              
-1600946808                NaN                NaN                 NaN  
-1600946809                NaN                NaN                 NaN  
-1600946810               0.05               0.04                 0.0  
-1600946811               0.05               0.04                 0.0  
-1600946812               0.05               0.04                 0.0  
+1601981900                0.0                0.01               0.02  
+1601981901                0.0                0.01               0.02  
+1601981902                0.0                0.01               0.02  
+1601981903                0.0                0.01               0.02  
+1601981904                0.0                0.01               0.02  
 </pre>
 </div>
 </div>

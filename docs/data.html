@@ -184,7 +184,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L84" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>group</code></strong>:<code>str</code>=<em><code>'average'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -202,6 +202,8 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>std_thold</strong> <code>float</code> If defined calls function to filter cols with low standard deviation.</li>
 <li><strong>index_as_datetime</strong> <code>bool</code> If true, set the index to be a pandas datetime.</li>
 <li><strong>freq</strong> <code>str</code> Freq to be passed to pandas datetime index.</li>
+<li><strong>group</strong> <code>str</code> The grouping function to use.</li>
+<li><strong>sort_cols</strong> <code>bool</code> True to sort columns by name.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
@@ -241,80 +243,120 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(64, 554)
-            disk_mops.vda|writes  netdata.requests|requests  system.io|out  \
-time_idx                                                                     
-1600946595                   NaN                        NaN            NaN   
-1600946596              0.000000                  23.293680      -10.76060   
-1600946597              0.000000                  20.323980       -5.23940   
-1600946598              0.000000                   8.903625        0.00000   
-1600946599             -5.390782                   3.326795      -26.95286   
+<pre>(64, 505)
+            apps.cpu_system|apps.plugin  apps.cpu_system|charts.d.plugin  \
+time_idx                                                                   
+1601980900                          NaN                              NaN   
+1601980904                          NaN                              NaN   
+1601980905                       0.8541                              0.0   
+1601980906                       0.7204                              0.0   
+1601980907                       0.0000                              0.0   
 
-            netdata.server_cpu|user  netdata.server_cpu|system  \
-time_idx                                                         
-1600946595                      NaN                        NaN   
-1600946596                13.287540                   9.293180   
-1600946597                17.394410                   2.620197   
-1600946598                 9.230359                   8.083418   
-1600946599                 9.390573                   3.916582   
+            apps.cpu_system|httpd  apps.cpu_system|kernel  \
+time_idx                                                    
+1601980900                    NaN                     NaN   
+1601980904                    NaN                     NaN   
+1601980905                 0.8508                   0.000   
+1601980906                 0.0000                   0.000   
+1601980907                 0.0000                   0.996   
 
-            netdata.queries|queries  services.mem_usage|nginx  \
-time_idx                                                        
-1600946595                      NaN                       NaN   
-1600946596                16.975970                 13.398438   
-1600946597                17.012430                 13.519531   
-1600946598                 5.555713                 13.398438   
-1600946599                 0.000000                 13.519531   
+            apps.cpu_system|ksmd  apps.cpu_system|netdata  \
+time_idx                                                    
+1601980900                   NaN                      NaN   
+1601980904                   NaN                      NaN   
+1601980905                   0.0                   1.7083   
+1601980906                   0.0                   0.7204   
+1601980907                   0.0                   0.0000   
 
-            services.mem_usage|netdata  services.mem_usage|mariadb  \
-time_idx                                                             
-1600946595                         NaN                         NaN   
-1600946596                    2218.508                    63.83594   
-1600946597                    2216.363                    63.84766   
-1600946598                    2216.559                    63.84766   
-1600946599                    2216.383                    63.84766   
+            apps.cpu_system|python.d.plugin  apps.cpu_system|sql  \
+time_idx                                                           
+1601980900                              NaN                  NaN   
+1601980904                              NaN                  NaN   
+1601980905                              0.0                0.000   
+1601980906                              0.0                0.000   
+1601980907                              0.0                0.996   
 
-            netdata.db_points|read  ...  apps.uptime|time  apps.uptime|named  \
-time_idx                            ...                                        
-1600946595                     NaN  ...               NaN                NaN   
-1600946596               24429.630  ...               NaN                NaN   
-1600946597               23717.330  ...               NaN                NaN   
-1600946598                7745.365  ...        60082600.0         60082600.0   
-1600946599                   0.000  ...        60082600.0         60082600.0   
+            apps.cpu_system|tc-qos-helper  apps.cpu_system|vpn  ...  \
+time_idx                                                        ...   
+1601980900                            NaN                  NaN  ...   
+1601980904                            NaN                  NaN  ...   
+1601980905                         0.0000                0.000  ...   
+1601980906                         0.7204                0.000  ...   
+1601980907                         0.0000                0.996  ...   
 
-            apps.uptime|cron  apps.uptime|ksmd  apps.uptime|system  \
-time_idx                                                             
-1600946595               NaN               NaN                 NaN   
-1600946596               NaN               NaN                 NaN   
-1600946597               NaN               NaN                 NaN   
-1600946598        60082600.0        60082600.0          60082600.0   
-1600946599        60082600.0        60082600.0          60082600.0   
-
-            apps.uptime|kernel  apps.uptime|other  \
+            web_log_nginx.requests_per_url|charts  \
 time_idx                                            
-1600946595                 NaN                NaN   
-1600946596                 NaN                NaN   
-1600946597                 NaN                NaN   
-1600946598          60082600.0         60082600.0   
-1600946599          60082600.0         60082600.0   
+1601980900                                    NaN   
+1601980904                               8.998841   
+1601980905                               8.865876   
+1601980906                               7.732038   
+1601980907                               6.269853   
 
-            mysql_local.queries|queries  mysql_local.queries|questions  \
-time_idx                                                                 
-1600946595                          NaN                            NaN   
-1600946596                          NaN                            NaN   
-1600946597                          NaN                            NaN   
-1600946598                          NaN                            NaN   
-1600946599                     4.000374                       4.000374   
+            web_log_nginx.requests_per_url|kickstart  \
+time_idx                                               
+1601980900                                       NaN   
+1601980904                                       0.0   
+1601980905                                       0.0   
+1601980906                                       0.0   
+1601980907                                       0.0   
 
-            nginx_local.requests|requests  
-time_idx                                   
-1600946595                            NaN  
-1600946596                            NaN  
-1600946597                            NaN  
-1600946598                            NaN  
-1600946599                       7.965186  
+            web_log_nginx.requests_per_url|other  \
+time_idx                                           
+1601980900                                   NaN   
+1601980904                              1.999742   
+1601980905                              1.866559   
+1601980906                              1.265757   
+1601980907                              2.867962   
 
-[5 rows x 554 columns]
+            web_log_nginx.requests_per_url|registry  \
+time_idx                                              
+1601980900                                      NaN   
+1601980904                                      0.0   
+1601980905                                      0.0   
+1601980906                                      0.0   
+1601980907                                      0.0   
+
+            web_log_nginx.response_codes|2xx  \
+time_idx                                       
+1601980900                               NaN   
+1601980904                         10.998583   
+1601980905                         10.732435   
+1601980906                          8.997795   
+1601980907                          9.137815   
+
+            web_log_nginx.response_codes|4xx  \
+time_idx                                       
+1601980900                               NaN   
+1601980904                               0.0   
+1601980905                               0.0   
+1601980906                               0.0   
+1601980907                               0.0   
+
+            web_log_nginx.response_statuses|bad  \
+time_idx                                          
+1601980900                                  NaN   
+1601980904                                  0.0   
+1601980905                                  0.0   
+1601980906                                  0.0   
+1601980907                                  0.0   
+
+            web_log_nginx.response_statuses|success  \
+time_idx                                              
+1601980900                                      NaN   
+1601980904                                10.998583   
+1601980905                                10.732435   
+1601980906                                 8.997795   
+1601980907                                 9.137815   
+
+            web_log_nginx.response_time|avg  web_log_nginx.response_time|max  
+time_idx                                                                      
+1601980900                              NaN                              NaN  
+1601980904                         0.593600                         1.266558  
+1601980905                         0.833028                         2.733215  
+1601980906                         0.318155                         0.999755  
+1601980907                         0.285911                         1.000481  
+
+[5 rows x 505 columns]
 </pre>
 </div>
 </div>
@@ -378,7 +420,7 @@ time_idx
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L152" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
+<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L157" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Get alarm log from <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -413,6 +455,120 @@ time_idx
 
 <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_cols</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tests</span>
+
+<span class="c1"># test grouping behaves as expected</span>
+
+<span class="c1"># get some test data</span>
+<span class="n">test_host</span> <span class="o">=</span> <span class="s1">&#39;london.my-netdata.io&#39;</span>
+<span class="n">test_charts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;system.load&#39;</span><span class="p">]</span>
+
+<span class="c1"># get raw data</span>
+<span class="n">df_last100</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+
+<span class="c1"># direclty get aggregations</span>
+<span class="n">df_avg</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">)</span>
+<span class="n">df_std</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;stddev&#39;</span><span class="p">)</span>
+<span class="n">df_min</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+<span class="n">df_max</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">test_host</span><span class="p">,</span> <span class="n">test_charts</span><span class="p">,</span> <span class="n">after</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col_sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
+
+<span class="c1"># calc by hand</span>
+<span class="n">df_last100_avg</span> <span class="o">=</span> <span class="n">df_last100</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_last100_std</span> <span class="o">=</span> <span class="n">df_last100</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df_last100_min</span> <span class="o">=</span> <span class="n">df_last100</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">df_last100_max</span> <span class="o">=</span> <span class="n">df_last100</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="c1"># get diffs</span>
+<span class="n">avg_diffs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">df_avg</span> <span class="o">-</span> <span class="n">df_last100_avg</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_diffs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">df_std</span> <span class="o">-</span> <span class="n">df_last100_std</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">min_diffs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">df_min</span> <span class="o">-</span> <span class="n">df_last100_min</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">max_diffs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">df_max</span> <span class="o">-</span> <span class="n">df_last100_max</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># assert abs differences are small</span>
+<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">avg_diffs</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">std_diffs</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">min_diffs</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">max_diffs</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_allmetrics" class="doc_header"><code>get_allmetrics</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L182" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics</code>(<strong><code>host</code></strong>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>None</code></em>)</p>
+</blockquote>
+<p>Get allmetrics into a df.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>host</strong> <code>str</code> The host we want to get the alarm log from.</li>
+<li><strong>charts</strong> <code>list</code> A list of charts to pull data for.</li>
+</ul>
+<h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
+<li><strong>df</strong> <code>pd.DataFrame</code> A df of the latest data from allmetrics.</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tests</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;london.my-netdata.io&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_allmetrics</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2000</span>
+<span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;chart&#39;</span><span class="p">,</span><span class="s1">&#39;dimension&#39;</span><span class="p">,</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="s1">&#39;system.cpu&#39;</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 </pre></div>
 
     </div>

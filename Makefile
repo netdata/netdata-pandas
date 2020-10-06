@@ -37,3 +37,13 @@ dist: clean
 
 clean:
 	rm -rf dist
+    
+release_on_windows:
+	nbdev_build_lib
+	nbdev_build_docs
+	nbdev_test_nbs
+	rmdir /s dist
+	python setup.py sdist bdist_wheel
+	twine upload --repository pypi dist/*
+	nbdev_bump_version
+    
