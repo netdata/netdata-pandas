@@ -204,12 +204,11 @@ def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str =
             for dimension in dimensions:
                 # [time, chart, name, value]
                 data.append(
-                    [time, k, "{}.{}".format(k, dimensions[dimension]['name']), dimensions[dimension]['value']]
+                    [time, k, "{}{}{}".format(k, col_sep, dimensions[dimension]['name']), dimensions[dimension]['value']]
                 )
     df = pd.DataFrame(data, columns=['time','chart','dimension','value'])
     if wide:
-        df['key'] = df['chart'] + col_sep + df['dimension']
-        df = df[['key', 'value']].groupby('key').mean().reset_index().pivot_table(columns=['key'])
+        df = df[['dimension', 'value']].groupby('dimension').mean().reset_index().pivot_table(columns=['dimension'])
         if sort_cols:
             df = df.reindex(sorted(df.columns), axis=1)
     return df
