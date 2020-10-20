@@ -5,9 +5,11 @@ __all__ = ['get_chart_list', 'get_chart', 'get_charts', 'get_data', 'get_alarm_l
 # Cell
 # export
 import asks
+from asks import BasicAuth
 import trio
 import pandas as pd
 import requests
+from requests.auth import HTTPBasicAuth
 from .wrangle import drop_low_uniqueness_cols, drop_low_std_cols
 
 # Cell
@@ -46,8 +48,12 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|'):
 
     """
 
-    url, chart, host = api_call
-    r = await asks.get(url)
+    url, chart, host, user, pwd = api_call
+    if user and pwd:
+        user_pwd = (user, pwd)
+        r = await asks.get(url, auth=BasicAuth(user_pwd))
+    else:
+        r = await asks.get(url)
     r_json = r.json()
     df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
     df['host'] = host
@@ -85,7 +91,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
              std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
-             group: str = 'average', sort_cols: bool = True) -> pd.DataFrame:
+             group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
+             protocol: str = 'http') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -105,6 +112,9 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **freq** `str` Freq to be passed to pandas datetime index.
     - **group** `str` The grouping function to use.
     - **sort_cols** `bool` True to sort columns by name.
+    - **user** `str` A username to use if netdata is password protected.
+    - **pwd** `str` A password to use if netdata is password protected.
+    - **protocol** `str` 'http' or 'https'.
 
 
     ##### Returns:
@@ -124,10 +134,9 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         else:
             charts = [charts]
 
-
     # define list of all api calls to be made
     api_calls = [
-        (f'http://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json&group={group}', chart, host)
+        (f'{protocol}://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json&group={group}', chart, host, user, pwd)
         for host in hosts for chart in charts
     ]
     # get the data
@@ -154,19 +163,26 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 # Cell
 
 
-def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True) -> pd.DataFrame:
+def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: str = None,
+                  pwd: str = None, protocol: str = 'http') -> pd.DataFrame:
     """Get alarm log from `host`.
 
     ##### Parameters:
     - **host** `str` The host we want to get the alarm log from.
+    - **user** `str` A username to use if netdata is password protected.
+    - **pwd** `str` A password to use if netdata is password protected.
+    - **protocol** `str` 'http' or 'https'.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the alarm_log.
 
     """
 
-    url = f"http://{host}/api/v1/alarm_log"
-    r = requests.get(url)
+    url = f"{protocol}://{host}/api/v1/alarm_log"
+    if user and pwd:
+        r = requests.get(url, auth=HTTPBasicAuth(user, pwd))
+    else:
+        r = requests.get(url)
     alarm_log = r.json()
     df = pd.DataFrame(alarm_log)
     if datetimes:
@@ -179,20 +195,28 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True) -> pd.D
 # Cell
 
 
-def get_allmetrics(host, charts: list = None):
+def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True,
+                   user: str = None, pwd: str = None, protocol: str = 'http') -> pd.DataFrame:
     """Get allmetrics into a df.
 
     ##### Parameters:
     - **host** `str` The host we want to get the alarm log from.
     - **charts** `list` A list of charts to pull data for.
+    - **wide** `bool` True if you want to return the data in wide format as opposed to long.
+    - **user** `str` A username to use if netdata is password protected.
+    - **pwd** `str` A password to use if netdata is password protected.
+    - **protocol** `str` 'http' or 'https'.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the latest data from allmetrics.
 
     """
 
-    url = f'http://{host}/api/v1/allmetrics?format=json'
-    raw_data = requests.get(url).json()
+    url = f'{protocol}://{host}/api/v1/allmetrics?format=json'
+    if user and pwd:
+        raw_data = requests.get(url, auth=HTTPBasicAuth(user, pwd)).json()
+    else:
+        raw_data = requests.get(url).json()
     if charts is None:
         charts = list(raw_data.keys())
     data = []
@@ -203,8 +227,12 @@ def get_allmetrics(host, charts: list = None):
             for dimension in dimensions:
                 # [time, chart, name, value]
                 data.append(
-                    [time, k, "{}.{}".format(k, dimensions[dimension]['name']), dimensions[dimension]['value']]
+                    [time, k, "{}{}{}".format(k, col_sep, dimensions[dimension]['name']), dimensions[dimension]['value']]
                 )
     df = pd.DataFrame(data, columns=['time','chart','dimension','value'])
+    if wide:
+        df = df[['dimension', 'value']].groupby('dimension').mean().reset_index().pivot_table(columns=['dimension'])
+        if sort_cols:
+            df = df.reindex(sorted(df.columns), axis=1)
     return df
 
