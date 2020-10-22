@@ -60,6 +60,8 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|'):
     df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
     data.append(df)
 
+
+
 # Cell
 
 
@@ -81,8 +83,10 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> p
         async with trio.open_nursery() as nursery:
             for api_call in api_calls:
                 nursery.start_soon(get_chart, api_call, data, col_sep)
-    df = pd.concat(data, join='outer', axis=1, sort=True)
+    df = pd.concat(data, join='outer', axis=0, sort=True)
     return df
+
+
 
 # Cell
 
@@ -92,7 +96,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
              std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
-             protocol: str = 'http') -> pd.DataFrame:
+             protocol: str = 'http', sort_rows: bool = True) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -115,7 +119,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **user** `str` A username to use if netdata is password protected.
     - **pwd** `str` A password to use if netdata is password protected.
     - **protocol** `str` 'http' or 'https'.
-
+    - **sort_rows** `bool` True to sort rows by index.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -142,8 +146,11 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     # get the data
     df = trio.run(get_charts, api_calls, col_sep, timeout)
     # post process the data
+    df = df.groupby(by=['host','time_idx']).max()
     if len(hosts) == 1:
         df = df.reset_index(level=0, drop=True)
+    if sort_rows:
+        df = df.sort_index()
     if numeric_only:
         df = df._get_numeric_data()
     if ffill:
@@ -159,6 +166,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     if sort_cols:
         df = df.reindex(sorted(df.columns), axis=1)
     return df
+
+
 
 # Cell
 
