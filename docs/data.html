@@ -144,7 +144,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L68" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -184,7 +184,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L90" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>group</code></strong>:<code>str</code>=<em><code>'average'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>group</code></strong>:<code>str</code>=<em><code>'average'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>sort_rows</code></strong>:<code>bool</code>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -207,6 +207,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>user</strong> <code>str</code> A username to use if netdata is password protected.</li>
 <li><strong>pwd</strong> <code>str</code> A password to use if netdata is password protected.</li>
 <li><strong>protocol</strong> <code>str</code> 'http' or 'https'.</li>
+<li><strong>sort_rows</strong> <code>bool</code> True to sort rows by index.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
@@ -246,120 +247,120 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(63, 572)
+<pre>(63, 544)
             apps.cpu_system|apps.plugin  apps.cpu_system|charts.d.plugin  \
 time_idx                                                                   
-1603192880                          NaN                              NaN   
-1603192883                          NaN                              NaN   
-1603192884                       1.0036                              0.0   
-1603192885                       0.0000                              0.0   
-1603192886                       0.9999                              0.0   
+1603397460                          NaN                              NaN   
+1603397461                       0.0000                           0.0000   
+1603397462                       0.7098                           0.0000   
+1603397463                       0.9043                           0.9043   
+1603397464                       0.0000                           0.0000   
 
             apps.cpu_system|httpd  apps.cpu_system|kernel  \
 time_idx                                                    
-1603192880                    NaN                     NaN   
-1603192883                    NaN                     NaN   
-1603192884                 0.0000                  0.5017   
-1603192885                 1.9998                  0.9999   
-1603192886                 0.0000                  0.0000   
+1603397460                    NaN                     NaN   
+1603397461                 0.0000                  0.9960   
+1603397462                 0.0000                  0.7126   
+1603397463                 0.9043                  0.9006   
+1603397464                 0.9999                  0.0000   
 
             apps.cpu_system|ksmd  apps.cpu_system|netdata  \
 time_idx                                                    
-1603192880                   NaN                      NaN   
-1603192883                   NaN                      NaN   
-1603192884                   0.0                      0.0   
-1603192885                   0.0                      0.0   
-1603192886                   0.0                      0.0   
+1603397460                   NaN                      NaN   
+1603397461                   0.0                   0.0000   
+1603397462                   0.0                   1.4252   
+1603397463                   0.0                   0.9006   
+1603397464                   0.0                   0.9999   
 
             apps.cpu_system|python.d.plugin  apps.cpu_system|sql  \
 time_idx                                                           
-1603192880                              NaN                  NaN   
-1603192883                              NaN                  NaN   
-1603192884                           0.0000               0.5017   
-1603192885                           0.0000               0.0000   
-1603192886                           0.9999               0.0000   
+1603397460                              NaN                  NaN   
+1603397461                           0.0000               0.0000   
+1603397462                           0.0000               0.0000   
+1603397463                           0.0000               0.9043   
+1603397464                           0.9999               0.0000   
 
             apps.cpu_system|tc-qos-helper  apps.cpu_system|vpn  ...  \
 time_idx                                                        ...   
-1603192880                            NaN                  NaN  ...   
-1603192883                            NaN                  NaN  ...   
-1603192884                            0.0               0.0000  ...   
-1603192885                            0.0               0.0000  ...   
-1603192886                            0.0               0.9999  ...   
+1603397460                            NaN                  NaN  ...   
+1603397461                         0.0000                  0.0  ...   
+1603397462                         0.0000                  0.0  ...   
+1603397463                         0.0000                  0.0  ...   
+1603397464                         0.9999                  0.0  ...   
 
             web_log_nginx.requests_per_url|kickstart  \
 time_idx                                               
-1603192880                                       NaN   
-1603192883                                   0.26313   
-1603192884                                   0.00000   
-1603192885                                   0.00000   
-1603192886                                   0.00000   
+1603397460                                       NaN   
+1603397461                                   0.00000   
+1603397462                                   0.00000   
+1603397463                                   1.67689   
+1603397464                                   0.32311   
 
             web_log_nginx.requests_per_url|other  \
 time_idx                                           
-1603192880                                   NaN   
-1603192883                              1.000028   
-1603192884                              1.736872   
-1603192885                              3.470988   
-1603192886                              1.791903   
+1603397460                                   NaN   
+1603397461                              1.999623   
+1603397462                              3.676534   
+1603397463                              3.161703   
+1603397464                              2.161978   
 
             web_log_nginx.requests_per_url|pack_inst  \
 time_idx                                               
-1603192880                                       NaN   
-1603192883                                       0.0   
-1603192884                                       0.0   
-1603192885                                       0.0   
-1603192886                                       0.0   
+1603397460                                       NaN   
+1603397461                                       0.0   
+1603397462                                       0.0   
+1603397463                                       0.0   
+1603397464                                       0.0   
 
             web_log_nginx.requests_per_url|registry  \
 time_idx                                              
-1603192880                                      NaN   
-1603192883                                 0.263130   
-1603192884                                 4.421309   
-1603192885                                 1.578691   
-1603192886                                 0.000000   
+1603397460                                      NaN   
+1603397461                                 7.804989   
+1603397462                                 2.806971   
+1603397463                                 0.323184   
+1603397464                                 0.000000   
 
             web_log_nginx.response_codes|2xx  \
 time_idx                                       
-1603192880                               NaN   
-1603192883                          9.894624   
-1603192884                         16.579411   
-1603192885                         17.777520   
-1603192886                         14.061367   
+1603397460                               NaN   
+1603397461                          21.54437   
+1603397462                          28.05835   
+1603397463                          22.45510   
+1603397464                          17.64981   
 
             web_log_nginx.response_codes|4xx  \
 time_idx                                       
-1603192880                               NaN   
-1603192883                               0.0   
-1603192884                               0.0   
-1603192885                               0.0   
-1603192886                               0.0   
+1603397460                               NaN   
+1603397461                               0.0   
+1603397462                               0.0   
+1603397463                               0.0   
+1603397464                               0.0   
 
             web_log_nginx.response_statuses|bad  \
 time_idx                                          
-1603192880                                  NaN   
-1603192883                                  0.0   
-1603192884                                  0.0   
-1603192885                                  0.0   
-1603192886                                  0.0   
+1603397460                                  NaN   
+1603397461                                  0.0   
+1603397462                                  0.0   
+1603397463                                  0.0   
+1603397464                                  0.0   
 
             web_log_nginx.response_statuses|success  \
 time_idx                                              
-1603192880                                      NaN   
-1603192883                                 9.894624   
-1603192884                                16.579411   
-1603192885                                17.777520   
-1603192886                                14.061367   
+1603397460                                      NaN   
+1603397461                                 21.54437   
+1603397462                                 28.05835   
+1603397463                                 22.45510   
+1603397464                                 17.64981   
 
             web_log_nginx.response_time|avg  web_log_nginx.response_time|max  
 time_idx                                                                      
-1603192880                              NaN                              NaN  
-1603192883                         0.775277                         1.526288  
-1603192884                         0.703937                         0.999987  
-1603192885                         0.746629                         3.944062  
-1603192886                         0.768780                         2.055714  
+1603397460                              NaN                              NaN  
+1603397461                         0.495874                         0.999811  
+1603397462                         0.639943                         1.838267  
+1603397463                         0.626779                         2.000074  
+1603397464                         0.987301                         2.839079  
 
-[5 rows x 572 columns]
+[5 rows x 544 columns]
 </pre>
 </div>
 </div>
@@ -396,6 +397,13 @@ time_idx
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span> <span class="n">index_as_datetime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">datetimes</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">tseries</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+
+<span class="c1"># test multiple hosts and charts</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">([</span><span class="s1">&#39;london.my-netdata.io&#39;</span><span class="p">,</span> <span class="s1">&#39;newyork.my-netdata.io&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;system.cpu&#39;</span><span class="p">,</span> <span class="s1">&#39;system.load&#39;</span><span class="p">],</span> <span class="n">after</span><span class="o">=-</span><span class="mi">60</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">122</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12</span>
+<span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;system.cpu|guest&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|guest_nice&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|iowait&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|irq&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|nice&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|softirq&#39;</span><span class="p">,</span> 
+                            <span class="s1">&#39;system.cpu|steal&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|system&#39;</span><span class="p">,</span> <span class="s1">&#39;system.cpu|user&#39;</span><span class="p">,</span> <span class="s1">&#39;system.load|load1&#39;</span><span class="p">,</span> <span class="s1">&#39;system.load|load15&#39;</span><span class="p">,</span> <span class="s1">&#39;system.load|load5&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -423,7 +431,7 @@ time_idx
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L166" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
+<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L176" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
 </blockquote>
 <p>Get alarm log from <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -539,7 +547,7 @@ time_idx
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_allmetrics" class="doc_header"><code>get_allmetrics</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L198" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics</code>(<strong><code>host</code></strong>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>wide</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
+<h4 id="get_allmetrics" class="doc_header"><code>get_allmetrics</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L208" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics</code>(<strong><code>host</code></strong>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>wide</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
 </blockquote>
 <p>Get allmetrics into a df.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
