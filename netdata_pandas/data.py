@@ -26,7 +26,6 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> li
     - **chart_list** `list` A list of availalbe charts.
 
     """
-
     url = f"http://{host}/api/v1/charts"
     r = requests.get(url)
     charts = r.json().get('charts')
@@ -35,19 +34,22 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> li
         chart_list = [chart for chart in chart_list if chart.startswith(starts_with)]
     return chart_list
 
+
+
 # Cell
 
 
-async def get_chart(api_call: str, data: list, col_sep: str ='|'):
+async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: bool = True, float_size: str = 'float64'):
     """Get data for an individual chart.
 
     ##### Parameters:
     - **api_call** `tuple` A tuple of (`url`,`chart`) for the url to pull data from and chart it represents.
     - **data** `list` A list for dataframes for each chart to be appended to.
     - **col_sep** `str` A character for separating chart and dimension in column names of dataframe.
+    - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
+    - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
 
     """
-
     url, chart, host, user, pwd = api_call
     if user and pwd:
         user_pwd = (user, pwd)
@@ -58,6 +60,8 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|'):
     df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
     df['host'] = host
     df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
+    if numeric_only:
+        df = df._get_numeric_data().astype(float_size)
     data.append(df)
 
 
@@ -65,25 +69,30 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|'):
 # Cell
 
 
-async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> pd.DataFrame:
+async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60, numeric_only: bool = True, float_size: str = 'float64') -> pd.DataFrame:
     """Create a nursey to make seperate async calls to get each chart.
 
     ##### Parameters:
     - **api_calls** `list` A list of tuple's of [(`url`,`chart`),...] of api calls that need to be made.
     - **col_sep** `str` A character for separating chart and dimension in column names of dataframe.
     - **timeout** `int` The number of seconds for trio to [move_on_after](https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after).
+    - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
+    - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index.
 
     """
-
+    n_hosts = len(set([x[2] for x in api_calls]))
     data = []
     with trio.move_on_after(timeout):
         async with trio.open_nursery() as nursery:
             for api_call in api_calls:
-                nursery.start_soon(get_chart, api_call, data, col_sep)
-    df = pd.concat(data, join='outer', axis=0, sort=True)
+                nursery.start_soon(get_chart, api_call, data, col_sep, numeric_only, float_size)
+    if n_hosts == 1:
+        df = pd.concat(data, join='outer', axis=1, sort=True)
+    else:
+        df = pd.concat(data, join='outer', axis=0, sort=True)
     return df
 
 
@@ -92,11 +101,11 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60) -> p
 
 
 def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu'], after: int = -60,
-             before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = False,
+             before: int = 0, points: int = 0, col_sep: str = '|', numeric_only: bool = True,
              ffill: bool = True, diff: bool = False, timeout: int = 60, nunique_thold = None,
              std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
-             protocol: str = 'http', sort_rows: bool = True) -> pd.DataFrame:
+             protocol: str = 'http', sort_rows: bool = True, float_size: str = 'float64') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -114,45 +123,41 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **std_thold** `float` If defined calls function to filter cols with low standard deviation.
     - **index_as_datetime** `bool` If true, set the index to be a pandas datetime.
     - **freq** `str` Freq to be passed to pandas datetime index.
-    - **group** `str` The grouping function to use.
+    - **group** `str` The grouping function to use in the netdata api call.
     - **sort_cols** `bool` True to sort columns by name.
     - **user** `str` A username to use if netdata is password protected.
     - **pwd** `str` A password to use if netdata is password protected.
     - **protocol** `str` 'http' or 'https'.
     - **sort_rows** `bool` True to sort rows by index.
+    - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
 
     """
-
     # if hosts is a string make it a list of one
     if isinstance(hosts, str):
         hosts = [hosts]
 
-    # if charts is a string make it a list of one
-    if isinstance(charts, str):
-        # if specified get all charts
-        if charts == 'all':
-            charts = get_chart_list(hosts[0])
-        else:
-            charts = [charts]
+    # get list of host chart tuples we need to get data for
+    if charts == ['all']:
+        host_charts = [(host, chart) for host in hosts for chart in get_chart_list(host)]
+    else:
+        host_charts = [(host, chart) for host in hosts for chart in charts]
 
     # define list of all api calls to be made
     api_calls = [
-        (f'{protocol}://{host}/api/v1/data?chart={chart}&after={after}&before={before}&points={points}&format=json&group={group}', chart, host, user, pwd)
-        for host in hosts for chart in charts
+        (f'{protocol}://{host_chart[0]}/api/v1/data?chart={host_chart[1]}&after={after}&before={before}&points={points}&format=json&group={group}', host_chart[1], host_chart[0], user, pwd)
+        for host_chart in host_charts
     ]
     # get the data
-    df = trio.run(get_charts, api_calls, col_sep, timeout)
+    df = trio.run(get_charts, api_calls, col_sep, timeout, numeric_only, float_size)
     # post process the data
     df = df.groupby(by=['host','time_idx']).max()
     if len(hosts) == 1:
         df = df.reset_index(level=0, drop=True)
     if sort_rows:
         df = df.sort_index()
-    if numeric_only:
-        df = df._get_numeric_data()
     if ffill:
         df = df.ffill()
     if diff:
