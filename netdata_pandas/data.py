@@ -210,7 +210,8 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: s
 
 
 def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True,
-                   user: str = None, pwd: str = None, protocol: str = 'http') -> pd.DataFrame:
+                   user: str = None, pwd: str = None, protocol: str = 'http', numeric_only: bool = True,
+                   float_size: str = 'float64') -> pd.DataFrame:
     """Get allmetrics into a df.
 
     ##### Parameters:
@@ -220,6 +221,8 @@ def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str =
     - **user** `str` A username to use if netdata is password protected.
     - **pwd** `str` A password to use if netdata is password protected.
     - **protocol** `str` 'http' or 'https'.
+    - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
+    - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the latest data from allmetrics.
@@ -248,5 +251,7 @@ def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str =
         df = df[['dimension', 'value']].groupby('dimension').mean().reset_index().pivot_table(columns=['dimension'])
         if sort_cols:
             df = df.reindex(sorted(df.columns), axis=1)
+        if numeric_only:
+            df = df._get_numeric_data().astype(float_size)
     return df
 
