@@ -228,9 +228,10 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: s
 # Cell
 
 
-def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True,
+def get_allmetrics(host='london.my-netdata.io', charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True,
                    user: str = None, pwd: str = None, protocol: str = 'http', numeric_only: bool = True,
-                   float_size: str = 'float64') -> pd.DataFrame:
+                   float_size: str = 'float64', host_charts_dict: dict = None, host_prefix: bool = False,
+                   host_sep: str = ':') -> pd.DataFrame:
     """Get allmetrics into a df.
 
     ##### Parameters:
@@ -248,23 +249,34 @@ def get_allmetrics(host, charts: list = None, wide: bool = False, col_sep: str =
 
     """
 
-    url = f'{protocol}://{host}/api/v1/allmetrics?format=json'
-    if user and pwd:
-        raw_data = requests.get(url, auth=HTTPBasicAuth(user, pwd)).json()
-    else:
-        raw_data = requests.get(url).json()
-    if charts is None:
-        charts = list(raw_data.keys())
+    if not host_charts_dict:
+        host_charts_dict = {host: charts}
+
     data = []
-    for k in raw_data:
-        if k in charts:
-            time = raw_data[k]['last_updated']
-            dimensions = raw_data[k]['dimensions']
-            for dimension in dimensions:
-                # [time, chart, name, value]
-                data.append(
-                    [time, k, "{}{}{}".format(k, col_sep, dimensions[dimension]['name']), dimensions[dimension]['value']]
-                )
+    for host in host_charts_dict:
+        charts = host_charts_dict[host]
+        url = f'{protocol}://{host}/api/v1/allmetrics?format=json'
+        if user and pwd:
+            raw_data = requests.get(url, auth=HTTPBasicAuth(user, pwd)).json()
+        else:
+            raw_data = requests.get(url).json()
+        if charts is None:
+            charts = list(raw_data.keys())
+        for k in raw_data:
+            if k in charts:
+                time = raw_data[k]['last_updated']
+                dimensions = raw_data[k]['dimensions']
+                for dimension in dimensions:
+                    # [time, chart, name, value]
+                    if host_prefix:
+                        data.append(
+                            [time, f"{host}{host_sep}{k}", f"{host}{host_sep}{k}{col_sep}{dimensions[dimension]['name']}", dimensions[dimension]['value']]
+                        )
+                    else:
+                        data.append(
+                            [time, k, "{}{}{}".format(k, col_sep, dimensions[dimension]['name']), dimensions[dimension]['value']]
+                        )
+
     df = pd.DataFrame(data, columns=['time','chart','dimension','value'])
     if wide:
         df = df[['dimension', 'value']].groupby('dimension').mean().reset_index().pivot_table(columns=['dimension'])
