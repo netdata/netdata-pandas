@@ -59,9 +59,9 @@ print(df.head())
     1604928209               0.03                 0.0               0.04  
 
 
-```python
-# an alternative way to use it is to define what hosts and charts you want via the host_charts_dict param
+An alternative way to call `get_data()` is to define what hosts and charts you want via the `host_charts_dict` param:
 
+```python
 # define list of charts for each host you want data for
 host_charts_dict = {
     "london.my-netdata.io" : ['system.io','system.ip'],
@@ -69,114 +69,73 @@ host_charts_dict = {
 }
 df = get_data(host_charts_dict=host_charts_dict, host_prefix=True)
 print(df.shape)
-df.head()
+print(df.head())
 ```
 
     (61, 8)
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>london.my-netdata.io::system.io|in</th>
-      <th>london.my-netdata.io::system.io|out</th>
-      <th>london.my-netdata.io::system.ip|received</th>
-      <th>london.my-netdata.io::system.ip|sent</th>
-      <th>newyork.my-netdata.io::system.io|in</th>
-      <th>newyork.my-netdata.io::system.io|out</th>
-      <th>newyork.my-netdata.io::system.net|received</th>
-      <th>newyork.my-netdata.io::system.net|sent</th>
-    </tr>
-    <tr>
-      <th>time_idx</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1604928205</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>22.504610</td>
-      <td>-98.626510</td>
-    </tr>
-    <tr>
-      <th>1604928206</th>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>130.73635</td>
-      <td>-123.73966</td>
-      <td>0.0</td>
-      <td>-36.20121</td>
-      <td>22.008190</td>
-      <td>-16.564677</td>
-    </tr>
-    <tr>
-      <th>1604928207</th>
-      <td>0.0</td>
-      <td>-26.910170</td>
-      <td>282.60690</td>
-      <td>-126.88656</td>
-      <td>0.0</td>
-      <td>-51.79879</td>
-      <td>19.258920</td>
-      <td>-16.588992</td>
-    </tr>
-    <tr>
-      <th>1604928208</th>
-      <td>0.0</td>
-      <td>-13.089829</td>
-      <td>139.39631</td>
-      <td>-69.74703</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>14.081868</td>
-      <td>-17.615410</td>
-    </tr>
-    <tr>
-      <th>1604928209</th>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>64.39024</td>
-      <td>-62.24043</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>15.863426</td>
-      <td>-18.286320</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
+                london.my-netdata.io::system.io|in  \
+    time_idx                                         
+    1604928340                                 NaN   
+    1604928341                                 0.0   
+    1604928342                                 0.0   
+    1604928343                                 0.0   
+    1604928344                                 0.0   
+    
+                london.my-netdata.io::system.io|out  \
+    time_idx                                          
+    1604928340                                  NaN   
+    1604928341                            -53.89722   
+    1604928342                            -26.10278   
+    1604928343                              0.00000   
+    1604928344                              0.00000   
+    
+                london.my-netdata.io::system.ip|received  \
+    time_idx                                               
+    1604928340                                       NaN   
+    1604928341                                  49.25227   
+    1604928342                                 227.22840   
+    1604928343                                 123.56787   
+    1604928344                                  31.99060   
+    
+                london.my-netdata.io::system.ip|sent  \
+    time_idx                                           
+    1604928340                                   NaN   
+    1604928341                             -51.85469   
+    1604928342                             -85.22854   
+    1604928343                             -43.00154   
+    1604928344                             -19.55536   
+    
+                newyork.my-netdata.io::system.io|in  \
+    time_idx                                          
+    1604928340                                  0.0   
+    1604928341                                  0.0   
+    1604928342                                  0.0   
+    1604928343                                  0.0   
+    1604928344                                  0.0   
+    
+                newyork.my-netdata.io::system.io|out  \
+    time_idx                                           
+    1604928340                              0.000000   
+    1604928341                             -6.545929   
+    1604928342                             -9.454071   
+    1604928343                              0.000000   
+    1604928344                              0.000000   
+    
+                newyork.my-netdata.io::system.net|received  \
+    time_idx                                                 
+    1604928340                                   13.778033   
+    1604928341                                   18.281470   
+    1604928342                                   24.811770   
+    1604928343                                   26.406000   
+    1604928344                                   26.457510   
+    
+                newyork.my-netdata.io::system.net|sent  
+    time_idx                                            
+    1604928340                               -16.97193  
+    1604928341                               -19.23857  
+    1604928342                               -76.86994  
+    1604928343                              -165.55492  
+    1604928344                              -115.83034  
 
 
 ## Examples
