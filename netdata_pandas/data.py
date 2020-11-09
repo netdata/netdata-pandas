@@ -40,7 +40,7 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> li
 
 
 async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: bool = True, float_size: str = 'float64',
-                    host_prefix: bool = False):
+                    host_prefix: bool = False, host_sep: str = ':'):
     """Get data for an individual chart.
 
     ##### Parameters:
@@ -50,6 +50,7 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: 
     - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
     - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
     - **host_prefix** `bool` True to prefix each colname with the corresponding host.
+    - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
 
     """
     url, chart, host, user, pwd = api_call
@@ -61,7 +62,7 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: 
     r_json = r.json()
     df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
     if host_prefix:
-        df = df.set_index(['time_idx']).add_prefix(f'{host}::{chart}{col_sep}')
+        df = df.set_index(['time_idx']).add_prefix(f'{host}{host_sep}{chart}{col_sep}')
     else:
         df['host'] = host
         df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
@@ -75,7 +76,7 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: 
 
 
 async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60, numeric_only: bool = True, float_size: str = 'float64',
-                     host_prefix: bool = False) -> pd.DataFrame:
+                     host_prefix: bool = False, host_sep: str = ':') -> pd.DataFrame:
     """Create a nursey to make seperate async calls to get each chart.
 
     ##### Parameters:
@@ -85,6 +86,7 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60, nume
     - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
     - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
     - **host_prefix** `bool` True to prefix each colname with the corresponding host.
+    - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index.
@@ -95,7 +97,7 @@ async def get_charts(api_calls: list, col_sep: str ='|', timeout: int = 60, nume
     with trio.move_on_after(timeout):
         async with trio.open_nursery() as nursery:
             for api_call in api_calls:
-                nursery.start_soon(get_chart, api_call, data, col_sep, numeric_only, float_size, host_prefix)
+                nursery.start_soon(get_chart, api_call, data, col_sep, numeric_only, float_size, host_prefix, host_sep)
     if n_hosts == 1 or host_prefix:
         df = pd.concat(data, join='outer', axis=1, sort=True)
     else:
@@ -113,7 +115,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
              protocol: str = 'http', sort_rows: bool = True, float_size: str = 'float64',
-             host_charts_dict: dict = None, host_prefix: bool = False) -> pd.DataFrame:
+             host_charts_dict: dict = None, host_prefix: bool = False, host_sep: str = ':') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -140,6 +142,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
     - **host_charts_dict** `dict` dictionary of hosts to pull for where each value is list of relevant charts to pull from that host.
     - **host_prefix** `bool` True to prefix each colname with the corresponding host.
+    - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -164,7 +167,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         for host_chart in host_charts
     ]
     # get the data
-    df = trio.run(get_charts, api_calls, col_sep, timeout, numeric_only, float_size, host_prefix)
+    df = trio.run(get_charts, api_calls, col_sep, timeout, numeric_only, float_size, host_prefix, host_sep)
     # post process the data
     if host_prefix:
         df = df.groupby(by=['time_idx']).max()
