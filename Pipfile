@@ -7,7 +7,7 @@ verify_ssl = true
 jupyter = "==1.0.0"
 nbdev = "==0.2.18"
 jupyterlab = "==2.1.4"
-twine = "==3.1.1"
+twine = "==3.3.0"
 netdata-pandas = {editable = true, path = "."}
 
 [packages]
