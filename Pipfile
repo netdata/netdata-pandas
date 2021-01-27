@@ -5,7 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 jupyter = "==1.0.0"
-nbdev = "==0.2.18"
+nbdev = "==1.1.12"
 jupyterlab = "==3.0.5"
 twine = "==3.3.0"
 netdata-pandas = {editable = true, path = "."}
@@ -14,7 +14,7 @@ netdata-pandas = {editable = true, path = "."}
 pandas = "==1.2.1"
 asks = "==2.4.10"
 trio = "==0.18.0"
-requests = "==2.51.1"
+requests = "==2.25.1"
 anyio = "==2.0.2"
 nbdev = "==0.2.18"
 
