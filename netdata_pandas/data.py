@@ -5,6 +5,7 @@ __all__ = ['get_chart_list', 'get_chart', 'get_charts', 'get_data', 'get_alarm_l
 
 # Cell
 # export
+import re
 import time
 import asks
 from asks import BasicAuth
@@ -117,7 +118,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              std_thold: float = None, index_as_datetime: bool = False, freq: str = 'infer',
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
              protocol: str = 'http', sort_rows: bool = True, float_size: str = 'float64',
-             host_charts_dict: dict = None, host_prefix: bool = False, host_sep: str = ':') -> pd.DataFrame:
+             host_charts_dict: dict = None, host_prefix: bool = False, host_sep: str = ':',
+             charts_regex: str = None) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -145,6 +147,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **host_charts_dict** `dict` dictionary of hosts to pull for where each value is list of relevant charts to pull from that host.
     - **host_prefix** `bool` True to prefix each colname with the corresponding host.
     - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
+    - **charts_regex** `str` A regex expression for charts you want data for.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -158,6 +161,9 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     if host_charts_dict:
         host_charts = [(k, v) for k in host_charts_dict for v in host_charts_dict[k]]
         hosts = list(set(host_charts_dict.keys()))
+    elif charts_regex:
+        charts_regex = re.compile(charts_regex)
+        host_charts = [(host, chart) for host in hosts for chart in list(filter(charts_regex.match, get_chart_list(host)))]
     elif charts == ['all']:
         host_charts = [(host, chart) for host in hosts for chart in get_chart_list(host)]
     else:

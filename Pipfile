@@ -6,16 +6,16 @@ verify_ssl = true
 [dev-packages]
 jupyter = "==1.0.0"
 nbdev = "==0.2.18"
-jupyterlab = "==2.1.4"
-twine = "==3.1.1"
+jupyterlab = "==3.0.5"
+twine = "==3.3.0"
 netdata-pandas = {editable = true, path = "."}
 
 [packages]
-pandas = "==1.0.4"
-asks = "==2.3.7"
-trio = "==0.16.0"
-requests = "==2.23.0"
-anyio = "==1.4.0"
+pandas = "==1.2.1"
+asks = "==2.4.10"
+trio = "==0.18.0"
+requests = "==2.51.1"
+anyio = "==2.0.2"
 nbdev = "==0.2.18"
 
 [requires]
