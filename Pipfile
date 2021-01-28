@@ -12,7 +12,7 @@ netdata-pandas = {editable = true, path = "."}
 
 [packages]
 pandas = "==1.2.1"
-asks = "==2.4.10"
+asks = "==2.4.12"
 trio = "==0.18.0"
 requests = "==2.25.1"
 anyio = "==2.0.2"
