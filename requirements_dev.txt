@@ -1,5 +1,0 @@
-jupyter==1.0.0
-nbdev==1.1.12
-jupyterlab==2.1.4
-twine==3.1.1
-nbconvert==5.6.1

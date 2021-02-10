@@ -1,5 +1,0 @@
-pandas==1.0.4
-asks==2.4.10
-trio==0.16.0
-requests==2.25.1
-anyio==2.0.2
