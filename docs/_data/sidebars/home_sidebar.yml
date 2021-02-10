@@ -11,10 +11,10 @@ entries:
       url: /
     - output: web,pdf
       title: data
-      url: /data
+      url: data.html
     - output: web,pdf
       title: wrangle
-      url: /wrangle
+      url: wrangle.html
     output: web
     title: netdata_pandas
   output: web

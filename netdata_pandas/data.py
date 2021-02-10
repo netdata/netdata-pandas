@@ -18,18 +18,19 @@ from .wrangle import drop_low_uniqueness_cols, drop_low_std_cols
 # Cell
 
 
-def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None) -> list:
+def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, protocol: str = 'http') -> list:
     """Get list of all available charts on a `host`.
 
     ##### Parameters:
     - **host** `str` The host we want to get a list of available charts from.
     - **starts_with** `str` A string to filter the list of charts returns to just those that start with `starts_with`.
+    - **protocol** `str` 'http' or 'https'.
 
     ##### Returns:
     - **chart_list** `list` A list of availalbe charts.
 
     """
-    url = f"http://{host}/api/v1/charts"
+    url = f"{protocol}://{host}/api/v1/charts"
     r = requests.get(url)
     charts = r.json().get('charts')
     chart_list = [chart for chart in charts]
@@ -171,7 +172,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 
     # define list of all api calls to be made
     api_calls = [
-        (f'{protocol}://{host_chart[0]}/api/v1/data?chart={host_chart[1]}&after={after}&before={before}&points={points}&format=json&group={group}', host_chart[1], host_chart[0], user, pwd)
+        (f'{protocol}://{host_chart[0]}/api/v1/data?chart={host_chart[1]}&after={after}&before={before}&points={points}&format=json&group={group}&dimensions=*', host_chart[1], host_chart[0], user, pwd)
         for host_chart in host_charts
     ]
     # get the data

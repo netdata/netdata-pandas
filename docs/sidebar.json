@@ -1,7 +1,7 @@
 {
   "netdata_pandas": {
     "Overview": "/",
-    "data": "/data",
-    "wrangle": "/wrangle"
+    "data": "data.html",
+    "wrangle": "wrangle.html"
   }
 }
