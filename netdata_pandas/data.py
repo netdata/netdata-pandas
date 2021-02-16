@@ -206,7 +206,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 
 
 def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: str = None,
-                  pwd: str = None, protocol: str = 'http') -> pd.DataFrame:
+                  pwd: str = None, protocol: str = 'http', include_children: bool = False) -> pd.DataFrame:
     """Get alarm log from `host`.
 
     ##### Parameters:
@@ -214,19 +214,37 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: s
     - **user** `str` A username to use if netdata is password protected.
     - **pwd** `str` A password to use if netdata is password protected.
     - **protocol** `str` 'http' or 'https'.
+    - **include_children** `bool` 'True' to include alarm log for all children streamed to host.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the alarm_log.
 
     """
 
-    url = f"{protocol}://{host}/api/v1/alarm_log"
-    if user and pwd:
-        r = requests.get(url, auth=HTTPBasicAuth(user, pwd))
-    else:
-        r = requests.get(url)
-    alarm_log = r.json()
-    df = pd.DataFrame(alarm_log)
+    def get_alarm_log_df(protocol, host, user, pwd, child=None):
+        if child:
+            url = f"{protocol}://{host}/host/{child}/api/v1/alarm_log"
+        else:
+            url = f"{protocol}://{host}/api/v1/alarm_log"
+        if user and pwd:
+            r = requests.get(url, auth=HTTPBasicAuth(user, pwd))
+        else:
+            r = requests.get(url)
+        alarm_log = r.json()
+        df = pd.DataFrame(alarm_log)
+        return df
+
+    def get_children(protocol, host):
+        r = requests.get(f"{protocol}://{host}/api/v1/info")
+        children = r.json()['mirrored_hosts']
+        children.pop(0)
+        return children
+
+    df = get_alarm_log_df(protocol, host, user, pwd)
+    if include_children:
+        children = get_children(protocol, host)
+        for child in children:
+            df = df.append(get_alarm_log_df(protocol, host, user, pwd, child))
     if datetimes:
         for col in ['when', 'delay_up_to_timestamp']:
             df[col] = pd.to_datetime(df[col], unit='s')
