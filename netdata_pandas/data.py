@@ -261,7 +261,7 @@ def get_alarm_log(host: str = '127.0.0.1:19999', datetimes: bool = True, user: s
 def get_allmetrics(host='london.my-netdata.io', charts: list = None, wide: bool = False, col_sep: str = '|', sort_cols: bool = True,
                    user: str = None, pwd: str = None, protocol: str = 'http', numeric_only: bool = True,
                    float_size: str = 'float64', host_charts_dict: dict = None, host_prefix: bool = False,
-                   host_sep: str = ':') -> pd.DataFrame:
+                   host_sep: str = ':', verify: Union[str, bool] = True) -> pd.DataFrame:
     """Get allmetrics into a df.
 
     ##### Parameters:
@@ -273,6 +273,7 @@ def get_allmetrics(host='london.my-netdata.io', charts: list = None, wide: bool 
     - **protocol** `str` 'http' or 'https'.
     - **numeric_only** `bool` Set to true if you want to filter out any non numeric data.
     - **float_size** `str` float size to use if would like to save some memory, eg can use 'float32' or 'float16'.
+    - **verify** `Union[str, bool]` `verify` parameter to be set to `requests` for SSL cert verification.
 
     ##### Returns:
     - **df** `pd.DataFrame` A df of the latest data from allmetrics.
@@ -287,9 +288,9 @@ def get_allmetrics(host='london.my-netdata.io', charts: list = None, wide: bool 
         charts = host_charts_dict[host]
         url = f'{protocol}://{host}/api/v1/allmetrics?format=json'
         if user and pwd:
-            raw_data = requests.get(url, auth=HTTPBasicAuth(user, pwd)).json()
+            raw_data = requests.get(url, auth=HTTPBasicAuth(user, pwd), verify=verify).json()
         else:
-            raw_data = requests.get(url).json()
+            raw_data = requests.get(url, verify=verify).json()
         if charts is None:
             charts = list(raw_data.keys())
         for k in raw_data:
