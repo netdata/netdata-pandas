@@ -5,6 +5,7 @@ __all__ = ['get_chart_list', 'get_chart', 'get_charts', 'get_data', 'get_alarm_l
 
 # Cell
 # export
+from typing import Union
 import re
 import time
 import asks
@@ -26,13 +27,14 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, ends_
     - **starts_with** `str` A string to filter the list of charts returns to just those that start with `starts_with`.
     - **ends_with** `str` A string to filter the list of charts returns to just those that end with `ends_with`.
     - **protocol** `str` 'http' or 'https'.
+    - **verify** `Union[str, bool]` `verify` parameter to be set to `requests` for SSL cert verification.
 
     ##### Returns:
     - **chart_list** `list` A list of availalbe charts.
 
     """
     url = f"{protocol}://{host}/api/v1/charts"
-    r = requests.get(url)
+    r = requests.get(url, verify=verify)
     charts = r.json().get('charts')
     chart_list = [chart for chart in charts]
     if starts_with:
@@ -123,7 +125,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
              protocol: str = 'http', sort_rows: bool = True, float_size: str = 'float64',
              host_charts_dict: dict = None, host_prefix: bool = False, host_sep: str = ':',
-             charts_regex: str = None) -> pd.DataFrame:
+             charts_regex: str = None, verify: Union[str, bool] = True) -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -152,6 +154,7 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **host_prefix** `bool` True to prefix each colname with the corresponding host.
     - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
     - **charts_regex** `str` A regex expression for charts you want data for.
+    - **verify** `Union[str, bool]` `verify` parameter to be set to `requests` for SSL cert verification.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -167,9 +170,9 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
         hosts = list(set(host_charts_dict.keys()))
     elif charts_regex:
         charts_regex = re.compile(charts_regex)
-        host_charts = [(host, chart) for host in hosts for chart in list(filter(charts_regex.match, get_chart_list(host)))]
+        host_charts = [(host, chart) for host in hosts for chart in list(filter(charts_regex.match, get_chart_list(host, verify=verify)))]
     elif charts == ['all']:
-        host_charts = [(host, chart) for host in hosts for chart in get_chart_list(host)]
+        host_charts = [(host, chart) for host in hosts for chart in get_chart_list(host, verify=verify)]
     else:
         host_charts = [(host, chart) for host in hosts for chart in charts]
 
