@@ -18,12 +18,13 @@ from .wrangle import drop_low_uniqueness_cols, drop_low_std_cols
 # Cell
 
 
-def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, protocol: str = 'http') -> list:
+def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, ends_with: str = None, protocol: str = 'http') -> list:
     """Get list of all available charts on a `host`.
 
     ##### Parameters:
     - **host** `str` The host we want to get a list of available charts from.
     - **starts_with** `str` A string to filter the list of charts returns to just those that start with `starts_with`.
+    - **ends_with** `str` A string to filter the list of charts returns to just those that end with `ends_with`.
     - **protocol** `str` 'http' or 'https'.
 
     ##### Returns:
@@ -36,6 +37,8 @@ def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, proto
     chart_list = [chart for chart in charts]
     if starts_with:
         chart_list = [chart for chart in chart_list if chart.startswith(starts_with)]
+    if ends_with:
+        chart_list = [chart for chart in chart_list if chart.endswith(ends_with)]
     return chart_list
 
 
