@@ -19,7 +19,8 @@ from .wrangle import drop_low_uniqueness_cols, drop_low_std_cols
 # Cell
 
 
-def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, ends_with: str = None, protocol: str = 'http') -> list:
+def get_chart_list(host: str = '127.0.0.1:19999', starts_with: str = None, ends_with: str = None, protocol: str = 'http',
+    verify: Union[str, bool] = True) -> list:
     """Get list of all available charts on a `host`.
 
     ##### Parameters:
@@ -125,7 +126,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
              group: str = 'average', sort_cols: bool = True, user: str = None, pwd: str = None,
              protocol: str = 'http', sort_rows: bool = True, float_size: str = 'float64',
              host_charts_dict: dict = None, host_prefix: bool = False, host_sep: str = ':',
-             charts_regex: str = None, verify: Union[str, bool] = True) -> pd.DataFrame:
+             charts_regex: str = None, verify: Union[str, bool] = True, dimensions: str = '*',
+             options: str = '') -> pd.DataFrame:
     """Define api calls to make and any post processing to be done.
 
     ##### Parameters:
@@ -155,6 +157,8 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     - **host_sep** `str` A character for separating host and chart and dimensions in column names of dataframe.
     - **charts_regex** `str` A regex expression for charts you want data for.
     - **verify** `Union[str, bool]` `verify` parameter to be set to `requests` for SSL cert verification.
+    - **dimensions** `str` The `dimensions` parameter to pass to the api call, defaults to '*' for all dimensions.
+    - **options** `str` The `options` parameter to pass to the api call, defaults to '' to just accept defaults.
 
     ##### Returns:
     - **df** `pd.DataFrame` A pandas dataframe with all chart data outer joined based on time index and any post processing done.
@@ -178,7 +182,13 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
 
     # define list of all api calls to be made
     api_calls = [
-        (f'{protocol}://{host_chart[0]}/api/v1/data?chart={host_chart[1]}&after={after}&before={before}&points={points}&format=json&group={group}&dimensions=*', host_chart[1], host_chart[0], user, pwd)
+        (
+            f'{protocol}://{host_chart[0]}/api/v1/data?chart={host_chart[1]}&after={after}&before={before}&points={points}&format=json&group={group}&dimensions={dimensions}&options={options}',
+            host_chart[1],
+            host_chart[0],
+            user,
+            pwd
+        )
         for host_chart in host_charts
     ]
     # get the data
