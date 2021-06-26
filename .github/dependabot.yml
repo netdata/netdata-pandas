@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: jupyterlab
+    versions:
+    - 3.0.10
+    - 3.0.11
+    - 3.0.12
+    - 3.0.13
+    - 3.0.8
+    - 3.0.9
+  - dependency-name: pandas
+    versions:
+    - 1.2.3
+  - dependency-name: nbdev
+    versions:
+    - 1.1.12
+    - 1.1.13
+  - dependency-name: asks
+    versions:
+    - 2.4.12
+  - dependency-name: nbconvert
+    versions:
+    - 6.0.7
