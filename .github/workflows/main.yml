@@ -1,23 +1,8 @@
 name: CI
-on:
-  push:
-    branches: ['**']
-  pull_request:
-    branches: ['**']
+on: [push, pull_request]
 jobs:
-  should_run:
-    name: Run or skip?
-    continue-on-error: true
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
-    steps:
-      - id: skip_check
-        uses: fkirc/skip-duplicate-actions@master
 
   build:
-    needs: should_run
-    if: ${{ needs.should_run.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -27,7 +12,7 @@ jobs:
         architecture: 'x64'
     - name: Install the library
       run: |
-        pip install nbdev==0.2.18 jupyter==1.0.0
+        pip install nbdev==1.1.13 jupyter==1.0.0
         pip install -e .
     - name: Read all notebooks
       run: |
@@ -48,8 +33,6 @@ jobs:
       run: |
         nbdev_test_nbs
   dev:
-    needs: should_run
-    if: ${{ needs.should_run.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
