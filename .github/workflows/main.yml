@@ -31,3 +31,15 @@ jobs:
     - name: Run tests
       run: |
         nbdev_test_nbs
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
+        architecture: 'x64'
+    - name: Detection of Security Vulnerabilities
+      run: |
+        pip install pipenv
+        pipenv check
