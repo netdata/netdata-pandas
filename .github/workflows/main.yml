@@ -5,7 +5,19 @@ on:
   pull_request:
     branches: ['**']
 jobs:
+  should_run:
+    name: Run or skip?
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+
   build:
+    needs: should_run
+    if: ${{ needs.should_run.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -36,6 +48,8 @@ jobs:
       run: |
         nbdev_test_nbs
   dev:
+    needs: should_run
+    if: ${{ needs.should_run.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
