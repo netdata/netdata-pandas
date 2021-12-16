@@ -1,7 +1,5 @@
 SRC = $(wildcard ./*.ipynb)
 
-all: netdata-pandas docs
-
 build: $(SRC)
 	nbdev_build_lib
 	touch netdata-pandas
@@ -46,4 +44,12 @@ release_on_windows:
 	python setup.py sdist bdist_wheel
 	twine upload --repository pypi dist/*
 	nbdev_bump_version
-    
+
+all:
+	nbdev_build_lib
+	nbdev_build_docs
+	nbdev_test_nbs
+	rm -rf dist
+	python setup.py sdist bdist_wheel
+	twine upload --repository pypi dist/*
+	nbdev_bump_version

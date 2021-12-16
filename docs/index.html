@@ -98,38 +98,146 @@ description: "A helper library to pull data from netdata api into a pandas dataf
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(61, 12)
+<pre>(60, 12)
             system.cpu|guest  system.cpu|guest_nice  system.cpu|iowait  \
 time_idx                                                                 
-1601981900               NaN                    NaN                NaN   
-1601981901               0.0                    0.0                0.0   
-1601981902               0.0                    0.0                0.0   
-1601981903               0.0                    0.0                0.0   
-1601981904               0.0                    0.0                0.0   
+1604928398               0.0                    0.0                0.0   
+1604928399               0.0                    0.0                0.0   
+1604928400               0.0                    0.0                0.0   
+1604928401               0.0                    0.0                0.0   
+1604928402               0.0                    0.0                0.0   
 
             system.cpu|irq  system.cpu|nice  system.cpu|softirq  \
 time_idx                                                          
-1601981900             NaN              NaN                 NaN   
-1601981901             0.0              0.0                 0.0   
-1601981902             0.0              0.0                 0.0   
-1601981903             0.0              0.0                 0.0   
-1601981904             0.0              0.0                 0.0   
+1604928398             0.0              0.0            0.000000   
+1604928399             0.0              0.0            0.000000   
+1604928400             0.0              0.0            0.000000   
+1604928401             0.0              0.0            0.000000   
+1604928402             0.0              0.0            0.501253   
 
             system.cpu|steal  system.cpu|system  system.cpu|user  \
 time_idx                                                           
-1601981900               NaN                NaN              NaN   
-1601981901          0.000000           0.503778         0.503778   
-1601981902          0.000000           0.750000         0.750000   
-1601981903          0.000000           0.502513         0.753769   
-1601981904          0.251889           0.755668         0.251889   
+1604928398               0.0           0.750000         0.500000   
+1604928399               0.0           0.755668         0.755668   
+1604928400               0.0           0.252525         0.252525   
+1604928401               0.0           0.755668         1.007557   
+1604928402               0.0           0.751880         0.501253   
 
             system.load|load1  system.load|load15  system.load|load5  
 time_idx                                                              
-1601981900                0.0                0.01               0.02  
-1601981901                0.0                0.01               0.02  
-1601981902                0.0                0.01               0.02  
-1601981903                0.0                0.01               0.02  
-1601981904                0.0                0.01               0.02  
+1604928398                NaN                 NaN                NaN  
+1604928399                NaN                 NaN                NaN  
+1604928400               0.04                0.01               0.06  
+1604928401               0.04                0.01               0.06  
+1604928402               0.04                0.01               0.06  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>An alternative way to call <code>get_data()</code> is to define what hosts and charts you want via the <code>host_charts_dict</code> param:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># define list of charts for each host you want data for</span>
+<span class="n">host_charts_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;london.my-netdata.io&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;system.io&#39;</span><span class="p">,</span><span class="s1">&#39;system.ip&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;newyork.my-netdata.io&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;system.io&#39;</span><span class="p">,</span><span class="s1">&#39;system.net&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">host_charts_dict</span><span class="o">=</span><span class="n">host_charts_dict</span><span class="p">,</span> <span class="n">host_prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(61, 8)
+            london.my-netdata.io::system.io|in  \
+time_idx                                         
+1604928340                                 NaN   
+1604928341                                 0.0   
+1604928342                                 0.0   
+1604928343                                 0.0   
+1604928344                                 0.0   
+
+            london.my-netdata.io::system.io|out  \
+time_idx                                          
+1604928340                                  NaN   
+1604928341                            -53.89722   
+1604928342                            -26.10278   
+1604928343                              0.00000   
+1604928344                              0.00000   
+
+            london.my-netdata.io::system.ip|received  \
+time_idx                                               
+1604928340                                       NaN   
+1604928341                                  49.25227   
+1604928342                                 227.22840   
+1604928343                                 123.56787   
+1604928344                                  31.99060   
+
+            london.my-netdata.io::system.ip|sent  \
+time_idx                                           
+1604928340                                   NaN   
+1604928341                             -51.85469   
+1604928342                             -85.22854   
+1604928343                             -43.00154   
+1604928344                             -19.55536   
+
+            newyork.my-netdata.io::system.io|in  \
+time_idx                                          
+1604928340                                  0.0   
+1604928341                                  0.0   
+1604928342                                  0.0   
+1604928343                                  0.0   
+1604928344                                  0.0   
+
+            newyork.my-netdata.io::system.io|out  \
+time_idx                                           
+1604928340                              0.000000   
+1604928341                             -6.545929   
+1604928342                             -9.454071   
+1604928343                              0.000000   
+1604928344                              0.000000   
+
+            newyork.my-netdata.io::system.net|received  \
+time_idx                                                 
+1604928340                                   13.778033   
+1604928341                                   18.281470   
+1604928342                                   24.811770   
+1604928343                                   26.406000   
+1604928344                                   26.457510   
+
+            newyork.my-netdata.io::system.net|sent  
+time_idx                                            
+1604928340                               -16.97193  
+1604928341                               -19.23857  
+1604928342                               -76.86994  
+1604928343                              -165.55492  
+1604928344                              -115.83034  
 </pre>
 </div>
 </div>

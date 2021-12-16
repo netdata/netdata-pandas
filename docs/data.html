@@ -2,11 +2,13 @@
 
 title: data
 
+
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "Read data from netdata rest api into a pandas dataframe."
 description: "Read data from netdata rest api into a pandas dataframe."
+nb_path: "00_data.ipynb"
 ---
 <!--
 
@@ -31,13 +33,6 @@ description: "Read data from netdata rest api into a pandas dataframe."
     
 <div class="cell border-box-sizing code_cell rendered">
 
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
 <div class="output_wrapper">
 <div class="output">
 
@@ -45,12 +40,15 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+<h4 id="get_chart_list" class="doc_header"><code>get_chart_list</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart_list</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>starts_with</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>ends_with</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>verify</code></strong>:<code>Union</code>[<code>str</code>, <code>bool</code>]=<em><code>True</code></em>)</p>
 </blockquote>
 <p>Get list of all available charts on a <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
 <li><strong>host</strong> <code>str</code> The host we want to get a list of available charts from.</li>
 <li><strong>starts_with</strong> <code>str</code> A string to filter the list of charts returns to just those that start with <code>starts_with</code>.</li>
+<li><strong>ends_with</strong> <code>str</code> A string to filter the list of charts returns to just those that end with <code>ends_with</code>.</li>
+<li><strong>protocol</strong> <code>str</code> 'http' or 'https'.</li>
+<li><strong>verify</strong> <code>Union[str, bool]</code> <code>verify</code> parameter to be set to <code>requests</code> for SSL cert verification.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>chart_list</strong> <code>list</code> A list of availalbe charts.</li>
@@ -84,7 +82,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>)</p>
+<h4 id="get_chart" class="doc_header"><code>get_chart</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_chart</code>(<strong><code>api_call</code></strong>:<code>str</code>, <strong><code>data</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>, <strong><code>host_prefix</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>host_sep</code></strong>:<code>str</code>=<em><code>':'</code></em>)</p>
 </blockquote>
 <p>Get data for an individual chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -93,6 +91,8 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>col_sep</strong> <code>str</code> A character for separating chart and dimension in column names of dataframe.</li>
 <li><strong>numeric_only</strong> <code>bool</code> Set to true if you want to filter out any non numeric data.</li>
 <li><strong>float_size</strong> <code>str</code> float size to use if would like to save some memory, eg can use 'float32' or 'float16'.</li>
+<li><strong>host_prefix</strong> <code>bool</code> True to prefix each colname with the corresponding host.</li>
+<li><strong>host_sep</strong> <code>str</code> A character for separating host and chart and dimensions in column names of dataframe.</li>
 </ul>
 
 </div>
@@ -123,7 +123,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L72" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>)</p>
+<h4 id="get_charts" class="doc_header"><code>get_charts</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_charts</code>(<strong><code>api_calls</code></strong>:<code>list</code>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>, <strong><code>host_prefix</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>host_sep</code></strong>:<code>str</code>=<em><code>':'</code></em>)</p>
 </blockquote>
 <p>Create a nursey to make seperate async calls to get each chart.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -132,6 +132,8 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>timeout</strong> <code>int</code> The number of seconds for trio to <a href="https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after">move_on_after</a>.</li>
 <li><strong>numeric_only</strong> <code>bool</code> Set to true if you want to filter out any non numeric data.</li>
 <li><strong>float_size</strong> <code>str</code> float size to use if would like to save some memory, eg can use 'float32' or 'float16'.</li>
+<li><strong>host_prefix</strong> <code>bool</code> True to prefix each colname with the corresponding host.</li>
+<li><strong>host_sep</strong> <code>str</code> A character for separating host and chart and dimensions in column names of dataframe.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index.</li>
@@ -165,7 +167,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L103" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>group</code></strong>:<code>str</code>=<em><code>'average'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>sort_rows</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>)</p>
+<h4 id="get_data" class="doc_header"><code>get_data</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_data</code>(<strong><code>hosts</code></strong>:<code>list</code>=<em><code>['london.my-netdata.io']</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>['system.cpu']</code></em>, <strong><code>after</code></strong>:<code>int</code>=<em><code>-60</code></em>, <strong><code>before</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>points</code></strong>:<code>int</code>=<em><code>0</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>ffill</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>diff</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>nunique_thold</code></strong>=<em><code>None</code></em>, <strong><code>std_thold</code></strong>:<code>float</code>=<em><code>None</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>group</code></strong>:<code>str</code>=<em><code>'average'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>sort_rows</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>, <strong><code>host_charts_dict</code></strong>:<code>dict</code>=<em><code>None</code></em>, <strong><code>host_prefix</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>host_sep</code></strong>:<code>str</code>=<em><code>':'</code></em>, <strong><code>charts_regex</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>verify</code></strong>:<code>Union</code>[<code>str</code>, <code>bool</code>]=<em><code>True</code></em>, <strong><code>dimensions</code></strong>:<code>str</code>=<em>`'</em>'<code>*, **</code>options<code>**:</code>str<code>=*</code>''`*)</p>
 </blockquote>
 <p>Define api calls to make and any post processing to be done.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -190,6 +192,13 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>protocol</strong> <code>str</code> 'http' or 'https'.</li>
 <li><strong>sort_rows</strong> <code>bool</code> True to sort rows by index.</li>
 <li><strong>float_size</strong> <code>str</code> float size to use if would like to save some memory, eg can use 'float32' or 'float16'.</li>
+<li><strong>host_charts_dict</strong> <code>dict</code> dictionary of hosts to pull for where each value is list of relevant charts to pull from that host.</li>
+<li><strong>host_prefix</strong> <code>bool</code> True to prefix each colname with the corresponding host.</li>
+<li><strong>host_sep</strong> <code>str</code> A character for separating host and chart and dimensions in column names of dataframe.</li>
+<li><strong>charts_regex</strong> <code>str</code> A regex expression for charts you want data for.</li>
+<li><strong>verify</strong> <code>Union[str, bool]</code> <code>verify</code> parameter to be set to <code>requests</code> for SSL cert verification.</li>
+<li><strong>dimensions</strong> <code>str</code> The <code>dimensions</code> parameter to pass to the api call, defaults to '*' for all dimensions.</li>
+<li><strong>options</strong> <code>str</code> The <code>options</code> parameter to pass to the api call, defaults to '' to just accept defaults.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
@@ -223,7 +232,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L180" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>)</p>
+<h4 id="get_alarm_log" class="doc_header"><code>get_alarm_log</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L223" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_alarm_log</code>(<strong><code>host</code></strong>:<code>str</code>=<em><code>'127.0.0.1:19999'</code></em>, <strong><code>datetimes</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>include_children</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Get alarm log from <code>host</code>.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -231,6 +240,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 <li><strong>user</strong> <code>str</code> A username to use if netdata is password protected.</li>
 <li><strong>pwd</strong> <code>str</code> A password to use if netdata is password protected.</li>
 <li><strong>protocol</strong> <code>str</code> 'http' or 'https'.</li>
+<li><strong>include_children</strong> <code>bool</code> 'True' to include alarm log for all children streamed to host.</li>
 </ul>
 <h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
 <li><strong>df</strong> <code>pd.DataFrame</code> A df of the alarm_log.</li>
@@ -264,7 +274,7 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_allmetrics" class="doc_header"><code>get_allmetrics</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L212" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics</code>(<strong><code>host</code></strong>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>wide</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>)</p>
+<h4 id="get_allmetrics" class="doc_header"><code>get_allmetrics</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L273" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics</code>(<strong><code>host</code></strong>=<em><code>'london.my-netdata.io'</code></em>, <strong><code>charts</code></strong>:<code>list</code>=<em><code>None</code></em>, <strong><code>wide</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>, <strong><code>host_charts_dict</code></strong>:<code>dict</code>=<em><code>None</code></em>, <strong><code>host_prefix</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>host_sep</code></strong>:<code>str</code>=<em><code>':'</code></em>)</p>
 </blockquote>
 <p>Get allmetrics into a df.</p>
 <h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
@@ -287,6 +297,77 @@ description: "Read data from netdata rest api into a pandas dataframe."
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="get_allmetrics_async" class="doc_header"><code>get_allmetrics_async</code><a href="https://github.com/netdata/netdata-pandas/tree/master/netdata_pandas/data.py#L424" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_allmetrics_async</code>(<strong><code>host_charts_dict</code></strong>:<code>dict</code>=<em><code>None</code></em>, <strong><code>col_sep</code></strong>:<code>str</code>=<em><code>'|'</code></em>, <strong><code>numeric_only</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>timeout</code></strong>:<code>int</code>=<em><code>60</code></em>, <strong><code>index_as_datetime</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>freq</code></strong>:<code>str</code>=<em><code>'infer'</code></em>, <strong><code>sort_cols</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>user</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>pwd</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>protocol</code></strong>:<code>str</code>=<em><code>'http'</code></em>, <strong><code>float_size</code></strong>:<code>str</code>=<em><code>'float64'</code></em>, <strong><code>host_prefix</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>host_sep</code></strong>:<code>str</code>=<em><code>':'</code></em>, <strong><code>wide</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+</blockquote>
+<p>Define api calls to make and any post processing to be done.</p>
+<h5 id="Parameters:">Parameters:<a class="anchor-link" href="#Parameters:"> </a></h5><ul>
+<li><strong>col_sep</strong> <code>str</code> A character for separating chart and dimension in column names of dataframe.</li>
+<li><strong>numeric_only</strong> <code>bool</code> Set to true if you want to filter out any non numeric data.</li>
+<li><strong>timeout</strong> <code>int</code> The number of seconds for trio to <a href="https://trio.readthedocs.io/en/stable/reference-core.html#trio.move_on_after">move_on_after</a>.</li>
+<li><strong>index_as_datetime</strong> <code>bool</code> If true, set the index to be a pandas datetime.</li>
+<li><strong>freq</strong> <code>str</code> Freq to be passed to pandas datetime index.</li>
+<li><strong>sort_cols</strong> <code>bool</code> True to sort columns by name.</li>
+<li><strong>user</strong> <code>str</code> A username to use if netdata is password protected.</li>
+<li><strong>pwd</strong> <code>str</code> A password to use if netdata is password protected.</li>
+<li><strong>protocol</strong> <code>str</code> 'http' or 'https'.</li>
+<li><strong>float_size</strong> <code>str</code> float size to use if would like to save some memory, eg can use 'float32' or 'float16'.</li>
+<li><strong>host_charts_dict</strong> <code>dict</code> dictionary of hosts to pull for where each value is list of relevant charts to pull from that host.</li>
+<li><strong>host_prefix</strong> <code>bool</code> True to prefix each colname with the corresponding host.</li>
+<li><strong>host_sep</strong> <code>str</code> A character for separating host and chart and dimensions in column names of dataframe.</li>
+</ul>
+<h5 id="Returns:">Returns:<a class="anchor-link" href="#Returns:"> </a></h5><ul>
+<li><strong>df</strong> <code>pd.DataFrame</code> A pandas dataframe with all chart data outer joined based on time index and any post processing done.</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
