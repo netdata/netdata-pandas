@@ -561,11 +561,11 @@
         },
         "jinja2": {
             "hashes": [
-                "sha256:539835f51a74a69f41b848a9645dbdc35b4f20a3b601e2d9a7e22947b15ff119",
-                "sha256:640bed4bb501cbd17194b3cace1dc2126f5b619cf068a726b98192a0fde74ae9"
+                "sha256:077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8",
+                "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==3.1.1"
+            "markers": "python_version >= '3.6'",
+            "version": "==3.0.3"
         },
         "json5": {
             "hashes": [
@@ -750,11 +750,11 @@
         },
         "nbdev": {
             "hashes": [
-                "sha256:094f803d4c1053540ac544b3e1831ee69ade614d57cb15a3ee9fad55f638d5c8",
-                "sha256:9a73ddf3745bb882ae98c1a59d993fe5b43b190dcdb0a497bea1200f1ac2841c"
+                "sha256:655f59618fc5f6542f6b454e8ebc72870487922a6e1815024aa690d98a37d6ff",
+                "sha256:768e21d5cdd54feeb67a56123b24afb5daa7ee26188437de81e7a556949f1ada"
             ],
             "index": "pypi",
-            "version": "==1.2.2"
+            "version": "==1.2.5"
         },
         "nbformat": {
             "hashes": [
