@@ -1,0 +1,5 @@
+jupyter>=1.0.0
+nbdev>=1.1.12
+jupyterlab>=3.0.5
+twine>=3.3.0
+-e .
