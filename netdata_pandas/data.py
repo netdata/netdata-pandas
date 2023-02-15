@@ -69,17 +69,19 @@ async def get_chart(api_call: str, data: list, col_sep: str ='|', numeric_only: 
         r = await asks.get(url, auth=BasicAuth(user_pwd))
     else:
         r = await asks.get(url)
-    r_json = r.json()
-    df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
-    if host_prefix:
-        df = df.set_index(['time_idx']).add_prefix(f'{host}{host_sep}{chart}{col_sep}')
-    else:
-        df['host'] = host
-        df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
-    if numeric_only:
-        df = df._get_numeric_data().astype(float_size)
-    data.append(df)
-
+    try:
+        r_json = r.json()
+        df = pd.DataFrame(r_json['data'], columns=['time_idx'] + r_json['labels'][1:])
+        if host_prefix:
+            df = df.set_index(['time_idx']).add_prefix(f'{host}{host_sep}{chart}{col_sep}')
+        else:
+            df['host'] = host
+            df = df.set_index(['host','time_idx']).add_prefix(f'{chart}{col_sep}')
+        if numeric_only:
+            df = df._get_numeric_data().astype(float_size)
+        data.append(df)
+    except:
+        print(f'error found on data from: {url}')
 
 
 # Cell
