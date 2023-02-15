@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+jupyter = ">=1.0.0"
+nbdev = ">=1.1.12"
+jupyterlab = ">=3.0.5"
+twine = ">=3.3.0"
+netdata-pandas = {editable = true, path = "."}
+
+[packages]
+pandas = ">=1.0.4"
+asks = ">=2.4.12"
+trio = ">=0.18.0"
+requests = ">=2.25.1"
+
+[requires]
+python_version = "3.8"
