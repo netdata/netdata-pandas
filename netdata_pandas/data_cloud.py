@@ -12,15 +12,51 @@ import pandas as pd
 # Cell
 
 
-def get_data_cloud(space_id, room_id, context, after, before, points=None, api_token=None,
+def get_data_cloud(space_id, room_id, context, after=-60, before=0, points=None, api_token=None,
                    base_url='https://app.netdata.cloud', time_as_index=True, time_unit='ms',
                    group='average', aggregations=[{'method': 'sum', 'groupBy': ['dimension']}],
                    agent_options=['absolute', 'jsonwrap', 'nonzero', 'flip', 'ms'], gtime=0, with_metadata=True,
-                   format='array', node_ids=[], dimensions=[]
+                   format='array', node_ids=[], dimensions=[], freq=None
                    ):
-    """Get data from netdata cloud api"""
+    """Get data from netdata cloud api.
+
+    ##### Parameters:
+    - **space_id** `str` The space_id you would like to pull data from.
+    - **room_id** `str` The room_id you would like to pull data from.
+    - **context** `str` The context you would like to pull data from.
+    - **after** `int` The timestamp or relative integer from which to pull data after.
+    - **before** `int` The timestamp or relative integer from which to pull data before.
+    - **points** `int` The `points` parameter to pass to the api call if need to aggregate data in some way.
+    - **api_token** `str` The api token to use for the api call.
+    - **base_url** `str` The base url to use for the api call.
+    - **time_as_index** `bool` Whether to set the time column as the index of the dataframe.
+    - **time_unit** `str` The unit of time to use for the time column.
+    - **group** `str` The `group` parameter to pass to the api call.
+    - **aggregations** `list` The `aggregations` parameter to pass to the api call.
+    - **agent_options** `list` The `agent_options` parameter to pass to the api call.
+    - **gtime** `int` The `gtime` parameter to pass to the api call.
+    - **with_metadata** `bool` The `with_metadata` parameter to pass to the api call.
+    - **format** `str` The `format` parameter to pass to the api call.
+    - **node_ids** `list` The `node_ids` parameter to pass to the api call.
+    - **dimensions** `list` The `dimensions` parameter to pass to the api call.
+    - **freq** `str` The frequency to use for the dataframe index.
+
+    ##### Returns:
+    - **df** `pd.DataFrame` A pandas dataframe.
+
+    """
+
     if api_token is None:
         api_token = os.getenv('NETDATA_API_TOKEN')
+
+    window_length = before - after
+    if freq:
+        if freq.endswith('s'):
+            points = int(window_length / int(freq.replace('s','')))
+        elif freq.endswith('m'):
+            points = int(window_length / (int(freq.replace('m','')) * 60))
+        elif freq.endswith('h'):
+            points = int(window_length / (int(freq.replace('h','')) * 60 * 60))
 
     base_url = 'https://app.netdata.cloud'
     url = f'{base_url}/api/v2/spaces/{space_id}/rooms/{room_id}/data'
