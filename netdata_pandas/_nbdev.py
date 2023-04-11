@@ -11,7 +11,8 @@ index = {"get_chart_list": "00_data.ipynb",
          "get_allmetrics_async": "00_data.ipynb",
          "drop_low_uniqueness_cols": "01_wrangle.ipynb",
          "drop_low_std_cols": "01_wrangle.ipynb",
-         "get_data_cloud": "02_data_cloud.ipynb"}
+         "get_data_cloud": "02_data_cloud.ipynb",
+         "get_charts_cloud": "02_data_cloud.ipynb"}
 
 modules = ["data.py",
            "wrangle.py",
