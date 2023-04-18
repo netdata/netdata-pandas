@@ -181,6 +181,16 @@ def get_data(hosts: list = ['london.my-netdata.io'], charts: list = ['system.cpu
     else:
         host_charts = [(host, chart) for host in hosts for chart in charts]
 
+    # define points based on freq if given
+    window_length = before - after
+    if freq != 'infer':
+        if freq.endswith('s'):
+            points = int(window_length / int(freq.replace('s','')))
+        elif freq.endswith('m'):
+            points = int(window_length / (int(freq.replace('m','')) * 60))
+        elif freq.endswith('h'):
+            points = int(window_length / (int(freq.replace('h','')) * 60 * 60))
+
     # define list of all api calls to be made
     api_calls = [
         (
